@@ -1,0 +1,55 @@
+@charset "ISO-8859-1";
+
+
+
+body {
+         background: #2a9d8f !important;   
+        }
+
+       ul li{
+         
+      margin:10px;
+      padding:10px;
+      width:200px;
+      list-style-type: decimal;
+      
+      
+      }
+        
+        .list-group li{
+        background:#bdeaa0;
+      padding:10px;
+      width:250px;
+      }
+        
+        
+       .list{
+       background-color: #4DB6AC;
+        margin:10px;
+      padding:10px;;
+        width:400px;
+      
+       }
+        
+       .btn{
+       margin:10px;
+	background: linear-gradient(to bottom, white, #28a745);
+}
+
+.link{
+	 background-color: #ccccff;
+      
+}
+
+.linkBtn{
+	 background-color: #28a745;
+     margin-bottom: 10px;
+}
+
+      footer {
+         margin-top:50px;
+    text-align: center;
+  padding: 10px;
+ 
+  color: white;
+}
