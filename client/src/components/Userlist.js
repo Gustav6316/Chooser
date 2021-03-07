@@ -1,5 +1,4 @@
-
-const Userlist = ({ users }) => (
+const Userlist = ({users}) => (
     <div>
       {
         users
@@ -7,13 +6,9 @@ const Userlist = ({ users }) => (
             <div>
               <h1>User</h1>
               <div>
-                <h2>
-                  {users.map(({username}) => (
-                    <div key={username}>
-                      {username}
-                    </div>
-                  ))}
-                </h2>
+                <ul>
+                  {testwert(users)}
+                </ul>
               </div>
             </div>
           )
@@ -21,5 +16,14 @@ const Userlist = ({ users }) => (
       }
     </div>
   );
+
+const usernames = (users) => (users.map((user) =>  <li>{user.username}</li>));
+
+function testwert(users) {
+
+  console.log(users)
+  return (<li>testwert</li>);
+}
+
 
   export default Userlist;

@@ -32,9 +32,10 @@ const Lobby = ({ location }) => {
 
   useEffect(() => {
     socket.on('roomData', ({ users }) => {
-      setUsers(users);
+      setUsers(users); // da gibts ein Problem Input: [{user1}, {user2} usw.]
     });
 }, []);
+
   return (
     <div>
 
