@@ -17,6 +17,7 @@ const io = socketio(server, {
     }
 });
 
+// Connection Event von Socket.io
 io.on('connection', (socket) => {
     console.log('New connection!');
 
@@ -27,12 +28,15 @@ io.on('connection', (socket) => {
             return callback(error);
         }
 
-        socket.join(user.room);
+        socket.join(user.room);                                                                     // Beitritt in den Room
         console.log({ room: user.room, users: getUsersInRoom(user.room) });
-        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
+
+        io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });   // Übermitteln der User and den Raum
     });
 
+    // Entfernt User aus dem Raum wenn er diesen verlässt
     socket.on('disconnect', () => {
+        removeUser(socket.id);
         console.log('User left');
     });
 });

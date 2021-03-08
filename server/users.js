@@ -30,7 +30,6 @@ const getUser = (id) => {
     users.find((user) => user.id === id);
 }
 
-//gibt undefined aus
 const getUsersInRoom = (room) => {
     users.filter((user) => user.room === room);
 }

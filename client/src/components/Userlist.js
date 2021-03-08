@@ -1,3 +1,5 @@
+// Gibt user in einer Liste aus, wenn keiner übermittelt wird nur ein <h1>-Element mit No user found ausgegeben
+
 const Userlist = ({users}) => (
     <div>
       {
@@ -7,7 +9,7 @@ const Userlist = ({users}) => (
               <h1>User</h1>
               <div>
                 <ul>
-                  {testwert(users)}
+                  {usernames(users)}
                 </ul>
               </div>
             </div>
@@ -17,13 +19,7 @@ const Userlist = ({users}) => (
     </div>
   );
 
+  // Generiert Listenelemente aus dem übergebenen users Array
 const usernames = (users) => (users.map((user) =>  <li>{user.username}</li>));
-
-function testwert(users) {
-
-  console.log(users)
-  return (<li>testwert</li>);
-}
-
 
   export default Userlist;
