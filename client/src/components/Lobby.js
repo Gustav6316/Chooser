@@ -1,10 +1,13 @@
 import io from "socket.io-client";
-
+import reducer from './reducer';
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import queryString from 'query-string'
+import React from "react";
 
 import Userlist from './Userlist'
+import Choosing from "./Choosing/choosing";
+import Rating from "./Rating/Rating";
 
 let socket;
 
@@ -38,21 +41,37 @@ const Lobby = ({ location }) => {
       setUsers(users);
     });
 }, []);
-
+let data ;//teste noch
+  const toTheLobby = (props) =>{//hier werden die Daten von Chosing process empfangen
+                                //nun sollen sie hier auch addiert werden und weiter an Rating.jsx angegeben
+    dispatch({
+      type: 'JOINED',// das switched die Seiten sobald beim choosing alle Filme durch sind
+    });
+    data = props;
+  }
+  const [state, dispatch] = React.useReducer(reducer, {// zum Switchen da
+    joined: false,
+  });
 //HTML für die Lobby
   return (
     <div>
 
-      <div className="container float-left">
-        <h1 className="align-center">Lobby</h1>
-        <ul className="list-group" id="elementList">
-          <li class="list-group-item">Element 1</li>
-          <li class="list-group-item">Element 2</li>
-          <li class="list-group-item">Element 3</li>
-        </ul>
-      </div>
+    {/*  <div className="container float-left">*/}
+    {/*    <h1 className="align-center">Lobby</h1>*/}
+    {/*    <ul className="list-group" id="elementList">*/}
+    {/*      <li class="list-group-item">Element 1</li>*/}
+    {/*      <li class="list-group-item">Element 2</li>*/}
+    {/*      <li class="list-group-item">Element 3</li>*/}
+    {/*    </ul>*/}
+    {/*  </div>*/}
     
-    <Userlist users={ users }/>
+    {/*<Userlist users={ users }/>*/}
+
+      {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
+          <Choosing toTheLobby={toTheLobby}/>
+      ) : (
+          <Rating data={data} />
+      )}
     </div>
   )
 };
