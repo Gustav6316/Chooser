@@ -1,55 +1,49 @@
 import React from "react";
 import Item from "./Item/Item"
 import {renderEntireTree} from "../../index";
+import "bootstrap/dist/css/bootstrap.css";
+import {Col, Container, Row} from "react-bootstrap";
 
 
-let films = new Map();
-films.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);
+let data = new Map();
+data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);
 
-let filmsArray = Array.from(films, ([name]) => ({name}));
+let filmsArray = Array.from(data, ([name]) => ({name}));
 
-let counterFirstItem = 1;
-//let counterSecondItem = filmsArray.length-counterFirstItem-1; Why it`s not working???!
-
+let counterFirstItem = 0;
 
 const Choosing = (props) => {
 
-
+    let currentFilm = filmsArray[counterFirstItem].name;
     let plusPoint = (props) => {
 
-        if (filmsArray.length - 2 >= counterFirstItem) {
-            counterFirstItem++
-        } else {
-            counterFirstItem = 0;
-        }
-
-
-        films.set(props, films.get(props) + 1);
-
-        alert("Movie " + props + " has now " + films.get(props) + " point");
-
-
+        data.set(currentFilm, data.get(currentFilm) + props);
         renderEntireTree();
-
+        if(counterFirstItem >= filmsArray.length-1) return
+        counterFirstItem++;
     };
 
-   // let filmToShow = filmsArray[counterFirstItem].name;
-  //  let filmToShowSecond = filmsArray[counterSecondItem].name;
+
+    const showScore = () => {
+        return "Movie " + currentFilm + " has now " + data.get(currentFilm) + " point"
+    }
 
     return (
-        <div>
-            <div className="firstItem">
-                <Item  plusPoint={plusPoint} filmToShow={filmsArray[counterFirstItem].name}></Item>
 
-            </div>
-            <div className="or">
-                or
-            </div>
-            <div className="secondItem">
-                <Item  plusPoint={plusPoint} filmToShow={filmsArray[(filmsArray.length-1)-counterFirstItem].name}></Item>
+        <Container align-items='center'>
+            <Row className="justify-content-md-center">
 
-            </div>
-        </div>
+                <Col md="auto">
+                    <Item plusPoint={plusPoint} filmToShow={currentFilm}></Item>
+                </Col>
+
+            </Row>
+            <Row><Col>{"Movie " + 'Batman' + " has now " + data.get('Batman') + " point"}</Col></Row>
+            <Row><Col>{"Movie " + 'Hobbit' + " has now " + data.get('Hobbit') + " point"}</Col></Row>
+            <Row><Col>{"Movie " + 'Matrix' + " has now " + data.get('Matrix') + " point"}</Col></Row>
+            <Row><Col>{"Movie " + 'Bond' + " has now " + data.get('Bond') + " point"}</Col></Row>
+        </Container>
+
     );
 }
 export default Choosing;
