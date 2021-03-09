@@ -1,13 +1,13 @@
 import io from "socket.io-client";
-import reducer from './reducer';
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import queryString from 'query-string'
 import React from "react";
 
 import Userlist from './Userlist'
-import Choosing from "./Choosing/choosing";
-import Rating from "./Rating/Rating";
+import reducer from './reducer';
+import Choosing from "../Choosing/choosing";
+import Rating from "../Rating/Rating";
 
 let socket;
 

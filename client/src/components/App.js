@@ -1,8 +1,8 @@
 //import React, { useState } from "react";
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 
-import Lobby from "./Lobby";
-import Login from "./Login";
+import Lobby from "./Lobby/Lobby";
+import Login from "./Login/Login";
 
 import {Socket} from 'socket.io-client'
 

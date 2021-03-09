@@ -158,6 +158,21 @@ const createSession = (req, res) => {
     });
 }
 
+/*  Gibt alle Karten einer bestimmten Session zurück
+*   localhost:3000/api/cards/ID => JSON Objekte oder Error code 400
+*/
+const getCards = (req, res) => {
+    pool.query('SELECT * FROM public.cards WHERE sessionid = $1', [req.params.sessionid], (err, results) => {
+        if (err) throw err;
+
+        if (results.rowCount === 0) {
+            res.status(400).send(`Session ${req.params.sessionid} has no Cards yet or does not exist`);
+            return;
+        }
+        res.status(200).json(results.rows);
+    });
+}
+
 /*  Fügt ein komplettes Kartendeck bestehen aus JSON-Elementen in die Datenbank ein
 *   Momentan werden nur Dummy-Werte eingesetzt
 *   @param req, res => request und response an die API
@@ -198,4 +213,4 @@ console.log(toInsertableArray(objects));
     });
 }
 
-module.exports = {getUsers, getUsersByID, createUser, getLastThreeSessions, addCardDeck, createSession}
+module.exports = {getUsers, getUsersByID, createUser, getLastThreeSessions, addCardDeck, createSession, getCards}
