@@ -42,6 +42,7 @@ const Choosing = (props) => {
         return "Movie " + currentFilm + " has now " + data.get(currentFilm) + " point"
     }
 
+// String verkürzt von "String" + Value + "String" auf `String ${value} more String`
     return (
 
         <Container align-items='center'>
@@ -52,10 +53,10 @@ const Choosing = (props) => {
                 </Col>
 
             </Row>
-            <Row><Col>{"Movie " + 'Batman' + " has now " + data.get('Batman') + " point"}</Col></Row>
-            <Row><Col>{"Movie " + 'Hobbit' + " has now " + data.get('Hobbit') + " point"}</Col></Row>
-            <Row><Col>{"Movie " + 'Matrix' + " has now " + data.get('Matrix') + " point"}</Col></Row>
-            <Row><Col>{"Movie " + 'Bond' + " has now " + data.get('Bond') + " point"}</Col></Row>
+            <Row><Col>{`Movie Batman now has ${data.get('Batman')} points`}</Col></Row>
+            <Row><Col>{`Movie Hobbit now has ${data.get('Hobbit')} points`}</Col></Row>
+            <Row><Col>{`Movie Matrix now has ${data.get('Matrix')} points`}</Col></Row>
+            <Row><Col>{`Movie Bond now has ${data.get('Bond')} points`}</Col></Row>
         </Container>
 
     );

@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../api/db');
+const db = require('../db/db');
 
+// dummy users for testing
 const users = [
   {
       id: 1,
@@ -27,7 +28,7 @@ const users = [
 });
 */
 
-router.get('/users', db.getUsers);
+router.get('/', db.getUsers);
 
 /*router.get('/users/:id', function(req, res, next) {
   let user = users.find( u => u.id === parseInt(req.params.id));
@@ -40,7 +41,7 @@ router.get('/users', db.getUsers);
 });
 */
 
-router.get('/users/:id', db.getUsersByID)
+router.get('/:id', db.getUsersByID);
 
 /*router.post('/users', (req, res) => {
 if (!req.body.name || !req.body.age) {
@@ -66,5 +67,6 @@ if (!req.body.name || !req.body.age) {
 });
 */
 
-router.post('/users', db.createUser)
+router.post('/', db.createUser);
+
 module.exports = router;
