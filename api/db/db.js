@@ -14,16 +14,12 @@ const pool = new Pool({
 *   @param req => Übermittelte request
 *   @param dataToCheck => Daten die geprüft werden sollen
 */
-function handleSyntaxErrors (req, dataToCheck) {
-    
-    if (req.body === undefined) {
+function checkIfEmpty (req, res) {
+
+    if (Object.keys(req.body).length === 0) {
         res.status(400).send(`ERROR: Empty request body`);
         return false;
-
-    } else if (req.body.dataToCheck === undefined) {
-        res.status(404).send(`ERROR: No ${dataToCheck} specified`);
-        return false;
-    } 
+    }
 
     return true;
 }
@@ -145,10 +141,11 @@ const getLastThreeSessions = (req, res) => {
 /* Erstellt eine Session unter Angabe von sessionid und topic */
 const createSession = (req, res) => {
 
-    console.log(req.body.sessionid);
-        if (req.body === undefined) {   //wird noch ausgelagert
-        res.status(400).send('ERROR: Bad Request');
-        return;
+    if (!checkIfEmpty(req, res)) return;
+
+    if (req.body.sessionid === undefined || req.body.topic === undefined) {   //wird noch ausgelagert
+    res.status(400).send('ERROR: Bad Request');
+    return;
     }
 
     pool.query('INSERT INTO public.sessions(sessionid, topic) VALUES($1, $2)', [req.body.sessionid, req.body.topic], (err, results) => {
@@ -159,7 +156,7 @@ const createSession = (req, res) => {
 }
 
 /*  Gibt alle Karten einer bestimmten Session zurück
-*   localhost:3000/api/cards/ID => JSON Objekte oder Error code 400
+*   localhost:5000/api/cards/ID => JSON Objekte oder Error code 400
 */
 const getCards = (req, res) => {
     pool.query('SELECT * FROM public.cards WHERE sessionid = $1', [req.params.sessionid], (err, results) => {
