@@ -1,8 +1,10 @@
 import io from "socket.io-client";
 import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
-import queryString from 'query-string'
+import queryString from 'query-string';
 import React from "react";
+import axios from 'axios'
+import { Container, Button } from "react-bootstrap";
 
 import Userlist from './Userlist'
 import reducer from './reducer';
@@ -16,6 +18,17 @@ const Lobby = ({ location }) => {
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
   const ENDPOINT = 'http://localhost:4000';
+
+  // WIP übermittelt nicht res.data, weiß aber nicht warum
+  const getUserData = () => {
+
+    axios.get(`http://localhost:5000/api/users`)
+    .then(res => {
+      let users = res.data;
+      setUsers(users);
+    })
+  
+  }
 
   useEffect(() => {
     const { username, room } = queryString.parse(location.search);
@@ -41,6 +54,7 @@ const Lobby = ({ location }) => {
       setUsers(users);
     });
 }, []);
+
 let data ;//teste noch
   const toTheLobby = (props) =>{//hier werden die Daten von Chosing process empfangen
                                 //nun sollen sie hier auch addiert werden und weiter an Rating.jsx angegeben
@@ -52,6 +66,7 @@ let data ;//teste noch
   const [state, dispatch] = React.useReducer(reducer, {// zum Switchen da
     joined: false,
   });
+
 //HTML für die Lobby
   return (
     <div>
@@ -66,6 +81,8 @@ let data ;//teste noch
       </div>
     
     <Userlist users={ users }/>
+
+    <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
 
       {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
       {/*    <Choosing toTheLobby={toTheLobby}/>*/}

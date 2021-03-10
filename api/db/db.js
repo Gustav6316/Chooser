@@ -24,24 +24,6 @@ function checkIfEmpty (req, res) {
     return false;
 }
 
-/* function toInsertableArray (jsonArray) {
-    
-    let newArray = [];
-
-    for (let index = 0; index < jsonArray.length; index++) {
-        let temp = [];
-
-        temp.push(jsonArray[index].subject);
-        temp.push(jsonArray[index].description);
-        temp.push(jsonArray[index].sessionid);
-
-        newArray.push(temp);
-    }
-
-    return newArray;
-}
- */
-
 //const sql = postgres('postgres://dbadmin:h&!0eTA2l@212.227.192.158:5432/chooserdb');
 
 // Gibt alle User aus
@@ -62,7 +44,7 @@ const getUsers = (req, res) => {
       })
     }
 
-/*  Gibt Use mit der weitergegebenen ID aus.
+/*  Gibt User mit der weitergegebenen ID aus.
 *   Wenn dieser nicht zu finden ist, wird ein Fehler ausgegeben.
 */
 const getUsersByID = (req, res) => {
@@ -141,7 +123,7 @@ const createSession = (req, res) => {
     pool.query('INSERT INTO public.sessions(sessionid, topic) VALUES($1, $2)', [req.body.sessionid, req.body.topic], (err, results) => {
         if (err) throw err;
 
-        res.status(200).send(`Session: ${req.body.sessionid} added successfully`);
+        res.status(201).send(`Session: ${req.body.sessionid} added successfully`);
     });
 }
 
