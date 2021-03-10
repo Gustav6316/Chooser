@@ -56,22 +56,22 @@ let data ;//teste noch
   return (
     <div>
 
-    {/*  <div className="container float-left">*/}
-    {/*    <h1 className="align-center">Lobby</h1>*/}
-    {/*    <ul className="list-group" id="elementList">*/}
-    {/*      <li class="list-group-item">Element 1</li>*/}
-    {/*      <li class="list-group-item">Element 2</li>*/}
-    {/*      <li class="list-group-item">Element 3</li>*/}
-    {/*    </ul>*/}
-    {/*  </div>*/}
+      <div className="container float-left">
+        <h1 className="align-center">Lobby</h1>
+        <ul className="list-group" id="elementList">
+          <li class="list-group-item">Element 1</li>
+          <li class="list-group-item">Element 2</li>
+          <li class="list-group-item">Element 3</li>
+        </ul>
+      </div>
     
-    {/*<Userlist users={ users }/>*/}
+    <Userlist users={ users }/>
 
-      {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
-          <Choosing toTheLobby={toTheLobby}/>
-      ) : (
-          <Rating data={data} />
-      )}
+      {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
+      {/*    <Choosing toTheLobby={toTheLobby}/>*/}
+      {/*) : (*/}
+      {/*    <Rating data={data} />*/}
+      {/*)}*/}
     </div>
   )
 };

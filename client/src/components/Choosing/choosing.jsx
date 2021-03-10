@@ -1,6 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Item from "./Item/Item"
-import {renderEntireTree} from "../../index";
 import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Row} from "react-bootstrap";
 
@@ -8,22 +7,26 @@ import {Col, Container, Row} from "react-bootstrap";
 let data = new Map();
 data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);// Diese Daten mussen von DB stammen
 
-
-let counterFirstItem = 0;// dies auch lokal gespeichert
-
 const Choosing = (props) => {
-    let toTheLobby = props.toTheLobby;
+    const [count, setCount] = useState(0);
+    const [data1, setData1] = useState('');
+    useEffect(() => {
+        // app.post('http://localhost:5000/api/cards')
+        //     .then(response => response.json())
+        //     .then(data1 => setData1(data1));
+    });
+
 
     let filmsArray = Array.from(data, ([name]) => ({name}));// Dies wird aber lokal gespeichert
-    let currentFilm = filmsArray[counterFirstItem].name;
-    let plusPoint = (props) => {
+    let currentFilm = filmsArray[count].name;
+    let plusPoint = (props1) => {
 
-        data.set(currentFilm, data.get(currentFilm) + props);
-        renderEntireTree();
-        if (counterFirstItem >= filmsArray.length - 1) {
-            return toTheLobby(data);
+        data.set(currentFilm, data.get(currentFilm) + props1);
+        if (count >= filmsArray.length - 1) {
+            alert(data);
+            return props.toTheLobby(data);
         }//scoreTogether(); wenn alle filme durch sind,
-        else counterFirstItem++;       //wird diese F gerufen und sortierte Map in die Rating.jsx zurückgegeben
+        else setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Rating.jsx zurückgegeben
     };
 
     const scoreTogether = () => {
@@ -44,7 +47,6 @@ const Choosing = (props) => {
 
 // String verkürzt von "String" + Value + "String" auf `String ${value} more String`
     return (
-
         <Container align-items='center'>
             <Row className="justify-content-md-center">
 

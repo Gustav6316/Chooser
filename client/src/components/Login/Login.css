@@ -1,0 +1,61 @@
+@charset "ISO-8859-1";
+
+body {
+    background: #2a9d8f !important;
+}
+
+.card {
+    border: 1px solid #28a745;
+
+}
+
+.card-login {
+    margin-top: 130px;
+    padding: 18px;
+    max-width: 500px;
+}
+
+.card-header {
+    color: #fff;
+    margin: 20px;
+    border-bottom: 80;
+}
+
+
+.login_btn {
+    width: 150px;
+    color: #fff;
+    background-color: #ff0000;
+}
+
+
+.btn-outline-danger {
+    color: #fff;
+
+    background-color: #28a745;
+
+}
+
+
+.Sessions {
+    margin: 30px;
+    padding: 10px;;
+    width: 300px;
+}
+
+
+.list-group li {
+    background: #28a745;
+}
+
+ul li {
+
+    margin: 10px;
+    padding: 10px;
+    width: 250px;
+
+}
+        
+      
+        
+     

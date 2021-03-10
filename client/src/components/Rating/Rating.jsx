@@ -3,13 +3,13 @@ import React from "react";
 const Rating = (props) => {
 const show = () => {
 
-        console.log(props.data);
+        alert(props);
 
 }
     return(
         <div>
             <button onClick={show}>ff</button>
-            tesss
+            tessst
         </div>
     )
 };
