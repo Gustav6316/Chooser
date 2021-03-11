@@ -4,10 +4,11 @@ import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Row} from "react-bootstrap";
 
 
-let data = new Map();
-data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);// Diese Daten mussen von DB stammen
 
 const Choosing = (props) => {
+    let data = new Map();
+    data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);// Diese Daten mussen von DB stammen
+
     const [count, setCount] = useState(0);
     const [data1, setData1] = useState('');
     useEffect(() => {
@@ -23,7 +24,7 @@ const Choosing = (props) => {
 
         data.set(currentFilm, data.get(currentFilm) + props1);
         if (count >= filmsArray.length - 1) {
-            alert(data);
+
             return props.toTheLobby(data);
         }//scoreTogether(); wenn alle filme durch sind,
         else setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Rating.jsx zurückgegeben
