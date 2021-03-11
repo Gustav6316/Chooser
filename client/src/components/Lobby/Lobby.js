@@ -13,22 +13,31 @@ import Rating from "../Rating/Rating";
 
 let socket;
 
+// Test
+/* const api = axios.create({
+  baseURL: "http://localhost:5000/api/",
+  withCredentials: false,
+}); */
+
 const Lobby = ({ location }) => {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
   const ENDPOINT = 'http://localhost:4000';
 
-  // WIP übermittelt nicht res.data, weiß aber nicht warum
-  const getUserData = () => {
+  /*  Schickt GET and an die API/users und gibt ein JSON Array aus.
+  *   Wird unten in Zeile 91 in einem Button zum testen abgerufen
+  */
+    const getUserData = () => {
 
-    axios.get(`http://localhost:5000/api/users`)
-    .then(res => {
-      let users = res.data;
-      setUsers(users);
-    })
-  
-  }
+      return axios.get('http://localhost:5000/api/users')
+       .then(res => {                                     //promise
+        let users = res.data;
+        setUsers(users);                                  // update State
+      }) 
+    
+    }
+
 
   useEffect(() => {
     const { username, room } = queryString.parse(location.search);
@@ -37,9 +46,6 @@ const Lobby = ({ location }) => {
 
     setUsername(username);
     setRoom(room);
-
-    console.log(location.search);
-    console.log(username, room);
 
     socket.emit('join', { username, room }, () => {
     });
