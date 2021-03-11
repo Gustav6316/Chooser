@@ -65,14 +65,10 @@ const getUsersByID = (req, res) => {
 *  Sendet bei falscher Syntax einen Fehlercode und eine passende Nachricht.
 */
 const createUser = (req, res) => {
-    console.log(req.body);
-
-    console.log(req.body.id);
-    console.log(req.body.name);
 
     if (checkIfEmpty(req, res)) return;
 
-    pool.query('INSERT INTO public.users(userid, username) VALUES($1, $2)', [req.body.id, req.body.name], (err, results) => {
+    pool.query('INSERT INTO public.users(userid, username, sessionid) VALUES($1, $2)', [req.body.userid, req.body.username, req.body.sessionid], (err, results) => {
         if (err) {
             console.error(err);
             res.status(400).send(`User ${req.body.name} with ID ${req.body.id} could not be added`);
@@ -84,7 +80,7 @@ const createUser = (req, res) => {
 }
 
 const getSessionData = (req, res) => {
-    pool.query('SELECT $1 FROM public.sessions', [req.body.sessionID], (err, results) => {
+    pool.query('SELECT $1 FROM public.sessions', [req.body.sessionid], (err, results) => {
         if (err) {
             throw err;
             res.status(404).send(`Could not find session with ID: ${req.body.sessionID}`);
@@ -165,4 +161,4 @@ const addCard = (req, res) => {
     });
 }
 
-module.exports = {getUsers, getUsersByID, createUser, getLastThreeSessions, addCard, createSession, getCards}
+module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions, addCard, createSession, getCards }

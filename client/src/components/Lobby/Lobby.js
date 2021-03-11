@@ -3,13 +3,14 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import queryString from 'query-string';
 import React from "react";
-import axios from 'axios'
+//import axios from 'axios';
 import { Container, Button } from "react-bootstrap";
 
 import Userlist from './Userlist'
 import reducer from './reducer';
 import Choosing from "../Choosing/choosing";
 import Rating from "../Rating/Rating";
+import api from '../api'
 
 let socket;
 
@@ -30,7 +31,7 @@ const Lobby = ({ location }) => {
   */
     const getUserData = () => {
 
-      return axios.get('http://localhost:5000/api/users')
+      api.get('/users')
        .then(res => {                                     //promise
         let users = res.data;
         setUsers(users);                                  // update State
