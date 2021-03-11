@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser')
+//const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -10,6 +11,16 @@ const sessionsRouter = require('./routes/sessions');
 const cardsRouter = require('./routes/cards');
 
 const app = express();
+
+//Cors package funktioniert nicht, muss mich noch einlesen
+//app.use(cors);
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+  })
 
 app.use(logger('dev'));
 app.use(express.json());

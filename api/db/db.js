@@ -1,5 +1,4 @@
 const { Pool } = require('pg')
-const format = require('pg-format');
 
 // Nutzerdaten für die Datenbank und erstellung eines connection-Pools
 const pool = new Pool({
@@ -12,33 +11,17 @@ const pool = new Pool({
 
 /*  Prüft nach Syntaxfehlern
 *   @param req => Übermittelte request
-*   @param dataToCheck => Daten die geprüft werden sollen
 */
 function checkIfEmpty (req, res) {
 
+    console.log('checking');
+    console.log(Object.keys(req.body).length)
     if (Object.keys(req.body).length === 0) {
         res.status(400).send(`ERROR: Empty request body`);
-        return false;
+        return true;
     }
 
-    return true;
-}
-
-function toInsertableArray (jsonArray) {
-    
-    let newArray = [];
-
-    for (let index = 0; index < jsonArray.length; index++) {
-        const temp = [];
-
-        temp.push(jsonArray[index].subject);
-        temp.push(jsonArray[index].description);
-        temp.push(jsonArray[index].sessionid);
-
-        newArray.push(temp);
-    }
-
-    return newArray;
+    return false;
 }
 
 //const sql = postgres('postgres://dbadmin:h&!0eTA2l@212.227.192.158:5432/chooserdb');
@@ -46,32 +29,32 @@ function toInsertableArray (jsonArray) {
 // Gibt alle User aus
 const getUsers = (req, res) => {
 
-    pool.query('SELECT * FROM test.users', (err, results) => {
+    pool.query('SELECT * FROM public.users', (err, results) => {
         if (err) {
-          throw err
+          console.error(err);
+          res.status(400).send('SQL ERROR');
+          return;
         }
 
         if (results.rowCount === 0) {
-            res.status(404);
-            res.send(`Es wurden keine User gefunden`);
+            res.status(404).send('No Users found');
             return;
         }
           res.status(200).json(results.rows);
       })
     }
 
-/*  Gibt Use mit der weitergegebenen ID aus.
+/*  Gibt User mit der weitergegebenen ID aus.
 *   Wenn dieser nicht zu finden ist, wird ein Fehler ausgegeben.
 */
 const getUsersByID = (req, res) => {
     let id = parseInt(req.params.id);
 
-    pool.query('SELECT * FROM test.users WHERE userid=$1', [id], (err, results) => {
+    pool.query('SELECT * FROM public.users WHERE userid=$1', [id], (err, results) => {
         if (err) throw err;
         
         if (results.rowCount === 0) {
-            res.status(404)
-            res.send(`Kein User unter ID:${id} zu finden`)
+            res.status(404).send(`Kein User unter ID:${id} zu finden`)
             return;
         }
           res.status(200).json(results.rows);
@@ -82,27 +65,12 @@ const getUsersByID = (req, res) => {
 *  Sendet bei falscher Syntax einen Fehlercode und eine passende Nachricht.
 */
 const createUser = (req, res) => {
-    console.log(req.body);
 
-/*     if (req.body === undefined) {
-        res.status(400).send('BAD SYNTAX: No user specified');
-        return;
-    }
-    else if (req.body.id === undefined) {
-        res.status(400).send('BAD SYNTAX: No ID specified');
-        return;
-    }
-    else if (req.body.name === undefined) {
-        res.status(400).send('BAD SYNTAX: No name specified');
-        return;
-    } */
+    if (checkIfEmpty(req, res)) return;
 
-    console.log(req.body.id);
-    console.log(req.body.name);
-
-    pool.query('INSERT INTO test.users(userid, username) VALUES($1, $2)', [req.body.id, req.body.name], (err, results) => {
+    pool.query('INSERT INTO public.users(userid, username, sessionid) VALUES($1, $2)', [req.body.userid, req.body.username, req.body.sessionid], (err, results) => {
         if (err) {
-            throw err;
+            console.error(err);
             res.status(400).send(`User ${req.body.name} with ID ${req.body.id} could not be added`);
             return;
         }
@@ -112,7 +80,7 @@ const createUser = (req, res) => {
 }
 
 const getSessionData = (req, res) => {
-    pool.query('SELECT $1 FROM public.sessions', [req.body.sessionID], (err, results) => {
+    pool.query('SELECT $1 FROM public.sessions', [req.body.sessionid], (err, results) => {
         if (err) {
             throw err;
             res.status(404).send(`Could not find session with ID: ${req.body.sessionID}`);
@@ -141,7 +109,7 @@ const getLastThreeSessions = (req, res) => {
 /* Erstellt eine Session unter Angabe von sessionid und topic */
 const createSession = (req, res) => {
 
-    if (!checkIfEmpty(req, res)) return;
+    if (checkIfEmpty(req, res)) return;
 
     if (req.body.sessionid === undefined || req.body.topic === undefined) {   //wird noch ausgelagert
     res.status(400).send('ERROR: Bad Request');
@@ -151,7 +119,7 @@ const createSession = (req, res) => {
     pool.query('INSERT INTO public.sessions(sessionid, topic) VALUES($1, $2)', [req.body.sessionid, req.body.topic], (err, results) => {
         if (err) throw err;
 
-        res.status(200).send(`Session: ${req.body.sessionid} added successfully`);
+        res.status(201).send(`Session: ${req.body.sessionid} added successfully`);
     });
 }
 
@@ -175,39 +143,22 @@ const getCards = (req, res) => {
 *   @param req, res => request und response an die API
 *   @return code 200 und String OK bei Erfolg andernfalls code 400 oder 404
 */  
-const addCardDeck = (req, res) => {
+const addCard = (req, res) => {
 
-const objects = [
-  {
-      subject: 'The Dictator',
-      description: 'Comedy Movie',
-      sessionid: 'q4WrzX',
-  },
-  {
-      subject: 'Avengers: Endgame',
-      description: 'Action Movie',
-      sessionid: 'u7j98W',
-  },
-  {
-      subject: 'Avengers: Infinity War',
-      description: 'Another Avengers movie',
-      sessionid: 'uSk67y'
-  }
-]
+    if (checkIfEmpty(req, res)) return;
 
-console.log(toInsertableArray(objects));
+    console.log(req.body);
 
+    //const sql = format('INSERT INTO public.cards(subject, description, sessionid) VALUES($1, $2, $3)', [req.body.subject, req.body.description, req.body.sessionid]);
 
-    const sql = format('INSERT INTO public.cards(subject, description, sessionid) VALUES %L', toInsertableArray(objects));
-
-
-    pool.query(sql, (err, results) => {
-        if (err) throw err;
-
-        //if (!handleSyntaxErrors(req, id)) return;
+    pool.query('INSERT INTO public.cards(subject, description, sessionid) VALUES($1, $2, $3)', [req.body.subject, req.body.description, req.body.sessionid], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
 
         res.status(200).send('OK');
     });
 }
 
-module.exports = {getUsers, getUsersByID, createUser, getLastThreeSessions, addCardDeck, createSession, getCards}
+module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions, addCard, createSession, getCards }

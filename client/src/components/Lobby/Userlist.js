@@ -20,6 +20,6 @@ const Userlist = ({users}) => (
   );
 
   // Generiert Listenelemente aus dem übergebenen users Array
-const usernames = (users) => (users.map((user) =>  <li>{user.username}</li>));
+const usernames = (users) => (users.map((user) =>  <li key={user.id}>{user.username}</li>));
 
   export default Userlist;
