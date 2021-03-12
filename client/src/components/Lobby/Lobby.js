@@ -97,12 +97,12 @@ let data ;//teste noch
     <Userlist users={ users }/>
 
     <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
-    {/*//*/}
-    {/*//   {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
-    {/*//       <Choosing toTheLobby={toTheLobby}/>*/}
-    {/*//   ) : (*/}
-    {/*//       <Rating data={data} />*/}
-    {/*//   )}*/}
+
+      {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
+          <Choosing toTheLobby={toTheLobby}/>
+      ) : (
+          <Rating data={data} />
+      )}
     </div>
   )
 };
