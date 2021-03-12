@@ -35,8 +35,7 @@ const Lobby = ({ location }) => {
 
       api.get('/users')
        .then(res => {                                     //promise
-
-        setUsers(res.data);                                  // update State
+        setUsers(res.data);                               // update State
       })
 
     }
@@ -80,6 +79,7 @@ let data ;//teste noch
 const test1 = () =>{
   console.log('hier');
 
+  //console.log(addCard({subject:document.getElementById('btn1').value , description: "test desc", sessionid: 'test'}));
   console.log(addCard({subject:document.getElementById('btn1').value , description: "test desc", sessionid: 'test'}));
 }
 //HTML für die Lobby

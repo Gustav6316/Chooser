@@ -140,7 +140,6 @@ const getCards = (req, res) => {
 }
 
 /*  Fügt ein komplettes Kartendeck bestehen aus JSON-Elementen in die Datenbank ein
-*   Momentan werden nur Dummy-Werte eingesetzt
 *   @param req, res => request und response an die API
 *   @return code 200 und String OK bei Erfolg andernfalls code 400 oder 404
 */  
@@ -160,6 +159,11 @@ const addCard = (req, res) => {
     });
 }
 
+/*  Löscht eine Session und alle dazugehörigen User und Karten
+*   @param req, res => request und response an die API
+*   Erwarteter Request-Parameter: sessionid
+*   @return code 200 und String OK bei Erfolg andernfalls code 400 oder 404
+*/
 const deleteSession = (req, res) => {
 
     let sessionid = parseInt(req.params.sessionid);
@@ -170,12 +174,28 @@ const deleteSession = (req, res) => {
             res.status(400).send('SQL ERROR');
         }
         
-        if (results.rowCount === 0) {
-            res.status(404).send(`Kein User unter ID:${id} zu finden`)
-            return;
-        }
-          res.status(200).json(results.rows);
+          res.status(200).send('OK');
       })
     }
 
-module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions, addCard, createSession, getCards }
+/*  Addiert Punktzahl auf die bestehende Karte
+*   @param req, res => request und response an die API
+*   Erwarteter Request-Body: {sessionid: , subject: , score:}
+*   @return code 200 und String OK bei Erfolg andernfalls code 400 oder 404
+*/
+const updateScore = (req, res) => {
+
+    if (checkIfEmpty(req, res)) return;
+
+    pool.query('update public.cards set score=score + $1 where sessionid=$2 and subject=$3;', [req.body.score, req.body.sessionid, req.body.subject], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
+        
+            res.status(200).send('OK');
+        })
+    }
+
+module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions,
+        addCard, createSession, getCards, deleteSession, updateScore }

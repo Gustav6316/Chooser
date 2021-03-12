@@ -5,5 +5,6 @@ const db = require('../db/db');
 //router.get('/')
 router.get('/:sessionid', db.getCards);
 router.post('/', db.addCard);
+router.patch('/', db.updateScore);
 
 module.exports = router;

@@ -105,7 +105,28 @@ const pushDeck = (deck) => {
 
 /* DELETE ----------------------------------------------- */
 
+/*  Sendet ein DELETE-Request an die API
+*   Löscht eine Session, dessen User und Karten unter Angabe der Sessionid
+*   @param
+*/
+export const deleteSession = (sessionid) => {
+  api.delete(`/sessions/${sessionid}`)
+   .then(res => {                                    
+    return res.status;
+  });
+}
+
 /* PATCH  ----------------------------------------------- */
 
+/*  Sendet ein PATCH-Request an die API
+*   Erhöht den Score um die angegebene Höhe
+*   Erwarteter Request-Body: {sessionid: , subject:, score:}
+*/
+export const updateScore = (cardData) => {
+  api.delete(`/sessions`, cardData)
+   .then(res => {                                    
+    return res.status;
+  });
+}
+
 export default api;
-//exports = { getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard }
