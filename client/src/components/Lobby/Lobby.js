@@ -90,8 +90,8 @@ const test1 = () =>{
         <h1 className="align-center">Lobby</h1>
         <ul className="list-group" id="elementList">
           <input id='btn1' class="list-group-item" type='text' defaultValue="enter your Vorschlag here"/>
-          <input onClick={test1} type="submit" value="Submit"></input>
-          <li class="list-group-item">Element 2</li>
+          <input onClick={test2} type="submit" value="Submit"></input>
+          <li  class="list-group-item">Element 2</li>
           <li class="list-group-item">Element 3</li>
         </ul>
       </div>
