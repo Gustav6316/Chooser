@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import { useEffect, useState } from "react";
 import queryString from 'query-string';
 import React from "react";
-//import axios from 'axios';
 import { Container, Button } from "react-bootstrap";
 
 import Userlist from './Userlist'
@@ -56,9 +55,7 @@ const Lobby = ({ location }) => {
 
   }, [ENDPOINT, location.search]);
 
-  addCard("KIEV");
-  addCard("Berlin");
-  getCards(room);
+
 
 
   // Fängt roomData Event ab und übergibt die User and useState();
@@ -80,7 +77,11 @@ let data ;//teste noch
   const [state, dispatch] = React.useReducer(reducer, {// zum Switchen da
     joined: false,
   });
+const test1 = () =>{
+  console.log('hier');
 
+  console.log(addCard({subject:document.getElementById('btn1').value , description: "test desc", sessionid: room}));
+}
 //HTML für die Lobby
   return (
     <div>
@@ -88,7 +89,8 @@ let data ;//teste noch
       <div className="container float-left">
         <h1 className="align-center">Lobby</h1>
         <ul className="list-group" id="elementList">
-          <li class="list-group-item" onClick={addCard(get)}>Element 1</li>
+          <input id='btn1' class="list-group-item" type='text' defaultValue="enter your Vorschlag here"/>
+          <input onClick={test1} type="submit" value="Submit"></input>
           <li class="list-group-item">Element 2</li>
           <li class="list-group-item">Element 3</li>
         </ul>
@@ -98,11 +100,11 @@ let data ;//teste noch
 
     <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
 
-      {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
-          <Choosing toTheLobby={toTheLobby}/>
-      ) : (
-          <Rating data={data} />
-      )}
+      {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
+      {/*    <Choosing toTheLobby={toTheLobby}/>*/}
+      {/*) : (*/}
+      {/*    <Rating data={data} />*/}
+      {/*)}*/}
     </div>
   )
 };
