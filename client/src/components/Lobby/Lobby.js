@@ -1,13 +1,17 @@
 import io from "socket.io-client";
 import "bootstrap/dist/css/bootstrap.css";
-import React, {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import queryString from 'query-string';
-import './Lobby.css';
-import reducer from './reducer';
+import React from "react";
+import { Container, Button } from "react-bootstrap";
 
-import api, {addCard} from '../api';
-import {Button} from "react-bootstrap";
-import Userlist from "./Userlist";
+import Userlist from './Userlist'
+import reducer from './reducer';
+import Choosing from "../Choosing/choosing";
+import Rating from "../Rating/Rating";
+
+import api, {getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard} from '../api';
+
 
 
 let socket;
@@ -18,47 +22,48 @@ let socket;
   withCredentials: false,
 }); */
 
-const Lobby = ({location}) => {
-    const [username, setUsername] = useState('');
-    const [room, setRoom] = useState('');
-    const [users, setUsers] = useState('');
-    const ENDPOINT = 'http://localhost:4000';
+const Lobby = ({ location }) => {
+  const [username, setUsername] = useState('');
+  const [room, setRoom] = useState('');
+  const [users, setUsers] = useState('');
+  const ENDPOINT = 'http://localhost:4000';
 
-    /*  Schickt GET and an die API/users und gibt ein JSON Array aus.
-    *   Wird unten in Zeile 91 in einem Button zum testen abgerufen
-    */
+  /*  Schickt GET and an die API/users und gibt ein JSON Array aus.
+  *   Wird unten in Zeile 91 in einem Button zum testen abgerufen
+  */
     const getUserData = () => {
 
-        api.get('/users')
-            .then(res => {                                     //promise
-
-                setUsers(res.data);                                  // update State
-            })
+      api.get('/users')
+       .then(res => {                                     //promise
+        setUsers(res.data);                               // update State
+      })
 
     }
 
 
-    useEffect(() => {
-        const {username, room} = queryString.parse(location.search);
+  useEffect(() => {
+    const { username, room } = queryString.parse(location.search);
 
-        socket = io(ENDPOINT, {transports: ['websocket', 'polling', 'flashsocket']});
+    socket = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] });
 
-        setUsername(username);
-        setRoom(room);
+    setUsername(username);
+    setRoom(room);
 
-        socket.emit('join', {username, room}, () => {
-        });
+    socket.emit('join', { username, room }, () => {
+    });
 
-    }, [ENDPOINT, location.search]);
+  }, [ENDPOINT, location.search]);
 
 
-    // Fängt roomData Event ab und übergibt die User and useState();
 
-    useEffect(() => {
-        socket.on('roomData', ({users}) => {
-            setUsers(users);
-        });
-    }, []);
+
+  // Fängt roomData Event ab und übergibt die User and useState();
+
+  useEffect(() => {
+    socket.on('roomData', ({ users }) => {
+      setUsers(users);
+    });
+}, []);
 
 
     const toTheLobby = (props) => {//hier werden die Daten von Chosing process empfangen
@@ -80,107 +85,30 @@ const Lobby = ({location}) => {
         addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
     }
 //HTML für die Lobby
-    return (
-        <div>
+  return (
+    <div>
 
-            <div className="container float-left">
-                <h1 className="align-center">Lobby</h1>
-                <ul className="list-group" id="elementList">
-                    <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>
-                    <button onClick={addCardBtn} type="submit">Submit</button>
-                    <input id='btn1' className="list-group-item" type='text'
-                           placeholder="Write your second Suggestion!"/>
-                    <button onClick={addCardBtn} type="submit">Submit</button>
-                    <input id='btn1' className="list-group-item" type='text'
-                           placeholder="Write your third Suggestion!"/>
-                    <button onClick={addCardBtn} type="submit">Submit</button>
-                </ul>
+      <div className="container float-left">
+        <h1 className="align-center">Lobby</h1>
+        <ul className="list-group" id="elementList">
+          <input id='btn1' class="list-group-item" type='text' defaultValue="enter your Vorschlag here"/>
+          <input onClick={test2} type="submit" value="Submit"></input>
+          <li  class="list-group-item">Element 2</li>
+          <li class="list-group-item">Element 3</li>
+        </ul>
+      </div>
 
-            </div>
+    <Userlist users={ users }/>
 
-            <Userlist users={users}/>
+    <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
 
-            <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
-
-            {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
-            {/*    <Choosing toTheLobby={toTheLobby}/>*/}
-            {/*) : (*/}
-            {/*    <Rating data={data} />*/}
-            {/*)}*/}
-        </div>
-        // <div className='body'>
-        //
-        //
-        //   <div className="container mx-auto text-center">
-        //     <br/>
-        //     <h1>Chooser</h1>
-        //   </div>
-        //
-        //   <form action="" method="get">
-        //
-        //     <div className="container">
-        //       <div className="row">
-        //         <div className="col-sm-4 text-center">
-        //
-        //
-        //           <div className="list">
-        //
-        //             <ul className="Sessions mx-auto ">
-        //               <h4>Suggestions</h4>
-        //
-        //               <br/>
-        //
-        //               <ul className="list-group mx-auto ">
-        //                 <li className="list-group-item">First item</li>
-        //                 <li className="list-group-item">Second item</li>
-        //                 <li className="list-group-item">Third item</li>
-        //               </ul>
-        //             </ul>
-        //
-        //             <br/>
-        //
-        //             <select name="Modes" multiple size="1">
-        //               <option value="Modes">Modes (optional)</option>
-        //               <option value="Modus1">Modus1</option>
-        //               <option value="Modus2">Modus2</option>
-        //             </select>
-        //
-        //
-        //             <input type="submit" name="btn" value="Add Topic" className="btn"/>
-        //
-        //
-        //             <input type="submit" name="btn" value="Start Game" className="btn"/>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     </div>
-        //
-        //
-        //   </form>
-        //
-        //
-        //   <div className="col-sm-1 mx-auto">
-        //
-        //   </div>
-        //
-        //
-        //   <div className="participants col-sm-3 mx-auto ">
-        //
-        //     <ul>
-        //       <h1>Participants</h1>
-        //       <h4>
-        //         <li>First Member</li>
-        //       </h4>
-        //       <h4>
-        //         <li>First Member</li>
-        //       </h4>
-        //       <h4>
-        //         <li>First Member</li>
-        //       </h4>
-        //     </ul>
-        //   </div>
-        // </div>
-    )
+      {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
+      {/*    <Choosing toTheLobby={toTheLobby}/>*/}
+      {/*) : (*/}
+      {/*    <Rating data={data} />*/}
+      {/*)}*/}
+    </div>
+  )
 };
 
 export default Lobby;
