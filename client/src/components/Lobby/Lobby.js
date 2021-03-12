@@ -80,7 +80,7 @@ let data ;//teste noch
 const test1 = () =>{
   console.log('hier');
 
-  console.log(addCard({subject:document.getElementById('btn1').value , description: "test desc", sessionid: room}));
+  console.log(addCard({subject:document.getElementById('btn1').value , description: "test desc", sessionid: 'test'}));
 }
 //HTML für die Lobby
   return (

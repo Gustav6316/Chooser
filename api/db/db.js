@@ -15,6 +15,7 @@ const pool = new Pool({
 function checkIfEmpty (req, res) {
 
     console.log('checking');
+    console.log(req.body);
     console.log(Object.keys(req.body).length)
     if (Object.keys(req.body).length === 0) {
         res.status(400).send(`ERROR: Empty request body`);
@@ -149,8 +150,6 @@ const addCard = (req, res) => {
 
     console.log(req.body);
 
-    //const sql = format('INSERT INTO public.cards(subject, description, sessionid) VALUES($1, $2, $3)', [req.body.subject, req.body.description, req.body.sessionid]);
-
     pool.query('INSERT INTO public.cards(subject, description, sessionid) VALUES($1, $2, $3)', [req.body.subject, req.body.description, req.body.sessionid], (err, results) => {
         if (err) {
             console.error(err);
@@ -160,5 +159,23 @@ const addCard = (req, res) => {
         res.status(200).send('OK');
     });
 }
+
+const deleteSession = (req, res) => {
+
+    let sessionid = parseInt(req.params.sessionid);
+
+    pool.query('DELETE from public.sessions WHERE sessionid=$1;', [sessionid], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
+        
+        if (results.rowCount === 0) {
+            res.status(404).send(`Kein User unter ID:${id} zu finden`)
+            return;
+        }
+          res.status(200).json(results.rows);
+      })
+    }
 
 module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions, addCard, createSession, getCards }
