@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import queryString from 'query-string';
 import React from "react";
 import { Container, Button } from "react-bootstrap";
-
+import './Lobby.css'
 import Userlist from './Userlist'
 import reducer from './reducer';
 import Choosing from "../Choosing/choosing";
@@ -88,15 +88,20 @@ const Lobby = ({ location }) => {
   return (
     <div>
 
-      <div className="container float-left">
-        <h1 className="align-center">Lobby</h1>
-        <ul className="list-group" id="elementList">
-          <input id='btn1' class="list-group-item" type='text' defaultValue="enter your Vorschlag here"/>
-          <input onClick={test2} type="submit" value="Submit"></input>
-          <li  class="list-group-item">Element 2</li>
-          <li class="list-group-item">Element 3</li>
-        </ul>
-      </div>
+            <div className="container float-left">
+                <h1 className="align-center">Lobby</h1>
+                <ul className="list-group" id="elementList">
+                    <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>
+                    <button onClick={addCardBtn} type="submit">Submit</button>
+                    <input id='btn1' className="list-group-item" type='text'
+                           placeholder="Write your second Suggestion!"/>
+                    <button onClick={addCardBtn} type="submit">Submit</button>
+                    <input id='btn1' className="list-group-item" type='text'
+                           placeholder="Write your third Suggestion!"/>
+                    <button onClick={addCardBtn} type="submit">Submit</button>
+                </ul>
+
+            </div>
 
     <Userlist users={ users }/>
 
