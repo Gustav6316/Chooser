@@ -10,8 +10,7 @@ export const api = axios.create({
 export const getUsers = () => {
 
   api.get(`/users`)
-   .then(res => {                                   
-    let users = res.data;
+   .then(res => {
     return res.data;
   }) 
 
@@ -82,7 +81,7 @@ export const addSession = (session) => {
 }
 
 /*  Legt eine Karte(Vorschlag) an unter Angabe folgender Daten:
-*   {subject: , description: , sessionid}
+*   {subject: , description: , sessionid:}
 *   @param card => JSON mit card data
 */
 export const addCard = (card) => {
@@ -90,18 +89,20 @@ export const addCard = (card) => {
   api.post(`/users`, card)
    .then(res => {                                    
     return res.statusText;
-  }) 
+  });
 
 }
- // export const getUserData = () => {
- //
- //   api.get('/users')
- //    .then(res => {                                     //promise
- //     let users = res.data;
- //     setUsers(users);                                  // update State
- //   })
- //
- // }
+
+/*  Pusht alle Karten eines JSON-Arrays in die Datenbank
+*   @param JSON-Array mit Karten Format: {subject: , description: , sessionid:}
+*/
+const pushDeck = (deck) => {
+
+  for (let index = 0; index < deck.length; index++) {
+    addCard(deck[index]);
+  }
+
+}
 
 /* DELETE ----------------------------------------------- */
 
