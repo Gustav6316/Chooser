@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: "http://localhost:5000/api/",
+  baseURL: "http://localhost:5000/api",
   withCredentials: false,
 });
 
@@ -52,7 +52,7 @@ export const getLastThreeSessions = () => {
 
 }
 
-/* POST ----------------------------------------------- */
+/* POST   ----------------------------------------------- */
 
 /*  Legt einen Benutzer an unter Angabe folgender Daten:
 *   {userid: , username: , sessionid:}
@@ -73,7 +73,7 @@ export const addUser = (user) => {
 */
 export const addSession = (session) => {
 
-  api.post(`/users`, session)
+  api.post(`/sessions`, session)
    .then(res => {                                    
     return res.status;
   }) 
@@ -85,8 +85,7 @@ export const addSession = (session) => {
 *   @param card => JSON mit card data
 */
 export const addCard = (card) => {
-
-  api.post(`/users`, card)
+  api.post(`/cards`, card)
    .then(res => {                                    
     return res.statusText;
   });
@@ -105,6 +104,8 @@ const pushDeck = (deck) => {
 }
 
 /* DELETE ----------------------------------------------- */
+
+/* PATCH  ----------------------------------------------- */
 
 export default api;
 //exports = { getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard }
