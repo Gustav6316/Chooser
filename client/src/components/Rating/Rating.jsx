@@ -1,15 +1,17 @@
 import React from "react";
 
 const Rating = (props) => {
+
 const show = () => {
 
-        alert(props);
+    let divId = document.getElementById('test').innerHTML = props.data;
+    console.log(props.data);
 
 }
     return(
         <div>
             <button onClick={show}>ff</button>
-            tessst
+            <div id='test'>Test</div>
         </div>
     )
 };
