@@ -48,7 +48,8 @@ const getLastThreeSessions = () => {
     return sessions
   },
   (error) => {
-    console.log('Error getting last three sessions')
+    console.log('Error getting last three sessions');
+    console.log(error);
   }) 
 
 }
@@ -82,7 +83,7 @@ const addSession = (session) => {
 }
 
 /*  Legt eine Karte(Vorschlag) an unter Angabe folgender Daten:
-*   {subject: , description: , sessionid}
+*   {subject: , description: , sessionid:}
 *   @param card => JSON mit card data
 */
 const addCard = (card) => {
@@ -90,11 +91,23 @@ const addCard = (card) => {
   api.post(`/users`, card)
    .then(res => {                                    
     return res.statusText;
-  }) 
+  });
+
+}
+
+/*  Pusht alle Karten eines JSON-Arrays in die Datenbank
+*   @param JSON-Array mit Karten Format: {subject: , description: , sessionid:}
+*/
+const pushDeck = (deck) => {
+
+  for (let index = 0; index < deck.length; index++) {
+    addCard(deck[index]);
+  }
 
 }
 
 /* DELETE ----------------------------------------------- */
 
 export default api;
-exports = { getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard }
+//exports = {getUsers, getUser, getCards, getLastThreeSessions, addUser, addSession, addCard, pushDeck}
+// exports geht irgendwie nicht mehr, muss schauen warum
