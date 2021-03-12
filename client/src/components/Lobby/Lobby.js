@@ -10,7 +10,10 @@ import Userlist from './Userlist'
 import reducer from './reducer';
 import Choosing from "../Choosing/choosing";
 import Rating from "../Rating/Rating";
-import api from '../api'
+
+import api, {getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard} from '../api';
+
+
 
 let socket;
 
@@ -33,10 +36,10 @@ const Lobby = ({ location }) => {
 
       api.get('/users')
        .then(res => {                                     //promise
-        let users = res.data;
-        setUsers(users);                                  // update State
-      }) 
-    
+
+        setUsers(res.data);                                  // update State
+      })
+
     }
 
 
@@ -52,6 +55,10 @@ const Lobby = ({ location }) => {
     });
 
   }, [ENDPOINT, location.search]);
+
+  addCard("KIEV");
+  addCard("Berlin");
+  getCards(room);
 
 
   // Fängt roomData Event ab und übergibt die User and useState();
@@ -81,21 +88,21 @@ let data ;//teste noch
       <div className="container float-left">
         <h1 className="align-center">Lobby</h1>
         <ul className="list-group" id="elementList">
-          <li class="list-group-item">Element 1</li>
+          <li class="list-group-item" onClick={addCard(get)}>Element 1</li>
           <li class="list-group-item">Element 2</li>
           <li class="list-group-item">Element 3</li>
         </ul>
       </div>
-    
+
     <Userlist users={ users }/>
 
     <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
-
-      {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
-      {/*    <Choosing toTheLobby={toTheLobby}/>*/}
-      {/*) : (*/}
-      {/*    <Rating data={data} />*/}
-      {/*)}*/}
+    {/*//*/}
+    {/*//   {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
+    {/*//       <Choosing toTheLobby={toTheLobby}/>*/}
+    {/*//   ) : (*/}
+    {/*//       <Rating data={data} />*/}
+    {/*//   )}*/}
     </div>
   )
 };

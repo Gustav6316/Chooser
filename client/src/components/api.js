@@ -1,24 +1,24 @@
 import axios from 'axios';
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: "http://localhost:5000/api/",
   withCredentials: false,
 });
 
 /* GET ----------------------------------------------- */
 // Gibt alle User aus
-const getUsers = () => {
+export const getUsers = () => {
 
   api.get(`/users`)
    .then(res => {                                   
     let users = res.data;
-    return users
+    return res.data;
   }) 
 
 }
 
 // Gibt User mit Parameter :id aus
-const getUser = (id) => {
+export const getUser = (id) => {
 
   api.get(`/users/${id}`)
    .then(res => {                                    
@@ -29,7 +29,7 @@ const getUser = (id) => {
 }
 
 // Gibt alle Karten einer Session aus
-const getCards = (sessionid) => {
+export const getCards = (sessionid) => {
 
   api.get(`/cards/${sessionid}`)
    .then(res => {                                    
@@ -40,7 +40,7 @@ const getCards = (sessionid) => {
 }
 
 // Gibt die letzten drei Sessions aus
-const getLastThreeSessions = () => {
+export const getLastThreeSessions = () => {
 
   api.get(`/sessions`)
    .then(res => {                                    
@@ -59,7 +59,7 @@ const getLastThreeSessions = () => {
 *   {userid: , username: , sessionid:}
 *   @param user => JSON mit userdata
 */
-const addUser = (user) => {
+export const addUser = (user) => {
 
   api.post(`/users`, user)
    .then(res => {                                    
@@ -72,7 +72,7 @@ const addUser = (user) => {
 *   {sessionid: , topic:}
 *   @param session => JSON mit session data
 */
-const addSession = (session) => {
+export const addSession = (session) => {
 
   api.post(`/users`, session)
    .then(res => {                                    
@@ -85,7 +85,7 @@ const addSession = (session) => {
 *   {subject: , description: , sessionid}
 *   @param card => JSON mit card data
 */
-const addCard = (card) => {
+export const addCard = (card) => {
 
   api.post(`/users`, card)
    .then(res => {                                    
@@ -93,8 +93,17 @@ const addCard = (card) => {
   }) 
 
 }
+ // export const getUserData = () => {
+ //
+ //   api.get('/users')
+ //    .then(res => {                                     //promise
+ //     let users = res.data;
+ //     setUsers(users);                                  // update State
+ //   })
+ //
+ // }
 
 /* DELETE ----------------------------------------------- */
 
 export default api;
-exports = { getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard }
+//exports = { getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard }
