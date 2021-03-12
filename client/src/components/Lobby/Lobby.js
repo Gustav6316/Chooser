@@ -88,30 +88,30 @@ const Lobby = ({ location }) => {
   return (
     <div>
 
-            <div className="container float-left">
-                <h1 className="align-center">Lobby</h1>
-                <ul className="list-group" id="elementList">
-                    <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>
-                    <button onClick={addCardBtn} type="submit">Submit</button>
-                    <input id='btn1' className="list-group-item" type='text'
-                           placeholder="Write your second Suggestion!"/>
-                    <button onClick={addCardBtn} type="submit">Submit</button>
-                    <input id='btn1' className="list-group-item" type='text'
-                           placeholder="Write your third Suggestion!"/>
-                    <button onClick={addCardBtn} type="submit">Submit</button>
-                </ul>
+    {/*        <div className="container float-left">*/}
+    {/*            <h1 className="align-center">Lobby</h1>*/}
+    {/*            <ul className="list-group" id="elementList">*/}
+    {/*                <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>*/}
+    {/*                <button onClick={addCardBtn} type="submit">Submit</button>*/}
+    {/*                <input id='btn1' className="list-group-item" type='text'*/}
+    {/*                       placeholder="Write your second Suggestion!"/>*/}
+    {/*                <button onClick={addCardBtn} type="submit">Submit</button>*/}
+    {/*                <input id='btn1' className="list-group-item" type='text'*/}
+    {/*                       placeholder="Write your third Suggestion!"/>*/}
+    {/*                <button onClick={addCardBtn} type="submit">Submit</button>*/}
+    {/*            </ul>*/}
 
-            </div>
+    {/*        </div>*/}
 
-    <Userlist users={ users }/>
+    {/*<Userlist users={ users }/>*/}
 
-    <Button variant='warning' onClick={getUserData}>Get User Data now!</Button>
+    {/*<Button variant='warning' onClick={getUserData}>Get User Data now!</Button>*/}
 
-      {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
-      {/*    <Choosing toTheLobby={toTheLobby}/>*/}
-      {/*) : (*/}
-      {/*    <Rating data={data} />*/}
-      {/*)}*/}
+      {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
+          <Choosing toTheLobby={toTheLobby}/>
+      ) : (
+          <Rating />
+      )}
     </div>
   )
 };

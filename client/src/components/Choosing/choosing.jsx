@@ -2,15 +2,22 @@ import React, {useEffect, useState} from "react";
 import Item from "./Item/Item"
 import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Row} from "react-bootstrap";
+import api, {getCards} from '../api';
+
+
 
 
 
 const Choosing = (props) => {
+
+    let data2 = JSON.stringify(getCards('test'));//props.room  - für später
+    console.log(data2);
+
     let data = new Map();
     data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);// Diese Daten mussen von DB stammen
 
     const [count, setCount] = useState(0);
-    const [data1, setData1] = useState('');
+
     useEffect(() => {
         // app.post('http://localhost:5000/api/cards')
         //     .then(response => response.json())
