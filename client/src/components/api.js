@@ -29,7 +29,7 @@ export const getUser = (id) => {
 
 // Gibt alle Karten einer Session aus
 export const getCards = (sessionid) => {
-
+  console.log(`/cards/${sessionid}`)
   api.get(`/cards/${sessionid}`)
    .then(res => {
     console.log(res.data)                                   

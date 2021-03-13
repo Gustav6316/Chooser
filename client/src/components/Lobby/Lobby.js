@@ -26,13 +26,17 @@ const Lobby = ({ location }) => {
   /*  Schickt GET and an die API/users und gibt ein JSON Array aus.
   *   Wird unten in Zeile 91 in einem Button zum testen abgerufen
   */
-    const getUserData = () => {
+    const getUserData = (test) => { // Wird beim Click auf Get User Data Now! aufgerufen
 
       api.get('/users')
        .then(res => {                                     //promise
         setUsers(res.data);                               // update State
       })
 
+      getCards('test');     // Gibt JSON Array wieder
+      getCards(room);       // Gibt bei Gültiger Sessionid auch ein JSON Array wieder
+      //getCards(String)    => Infinite Loop wenn String mit Button übergeben wird
+      //                    Lösung: getCards muss über useState Werte bekommen.
     }
 
 
@@ -83,30 +87,30 @@ const Lobby = ({ location }) => {
   return (
     <div>
 
-    {/*        <div className="container float-left">*/}
-    {/*            <h1 className="align-center">Lobby</h1>*/}
-    {/*            <ul className="list-group" id="elementList">*/}
-    {/*                <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>*/}
-    {/*                <button onClick={addCardBtn} type="submit">Submit</button>*/}
-    {/*                <input id='btn1' className="list-group-item" type='text'*/}
-    {/*                       placeholder="Write your second Suggestion!"/>*/}
-    {/*                <button onClick={addCardBtn} type="submit">Submit</button>*/}
-    {/*                <input id='btn1' className="list-group-item" type='text'*/}
-    {/*                       placeholder="Write your third Suggestion!"/>*/}
-    {/*                <button onClick={addCardBtn} type="submit">Submit</button>*/}
-    {/*            </ul>*/}
+           <div className="container float-left">
+               <h1 className="align-center">Lobby</h1>
+               <ul className="list-group" id="elementList">
+                   <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>
+                   <button onClick={addCardBtn} type="submit">Submit</button>
+                   <input id='btn1' className="list-group-item" type='text'
+                          placeholder="Write your second Suggestion!"/>
+                   <button onClick={addCardBtn} type="submit">Submit</button>
+                   <input id='btn1' className="list-group-item" type='text'
+                          placeholder="Write your third Suggestion!"/>
+                   <button onClick={addCardBtn} type="submit">Submit</button>
+                </ul>
 
-    {/*        </div>*/}
+           </div>
 
-    {/*<Userlist users={ users }/>*/}
+    {<Userlist users={ users }/>}
 
-    {/*<Button variant='warning' onClick={getUserData}>Get User Data now!</Button>*/}
-
+    {<Button variant='warning' onClick={getUserData}>Get User Data now!</Button>}
+{/* 
       {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
           <Choosing toTheLobby={toTheLobby}/>
       ) : (
           <Rating />
-      )}
+      )} */}
     </div>
   )
 };
