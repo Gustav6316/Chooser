@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Form, Button, ListGroup } from "react-bootstrap";
 import queryString from 'query-string';
@@ -7,11 +7,9 @@ import uniqid from 'uniqid';
 
 import api from '../api'
 
-export default function Login({onSetId}) {
+export default function Login() {
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
-/*     const inputRoom = useRef(null);
-    const inputName = useRef(null); */
 
     // temporär bis das exports Problem gelöst ist
     const getLastThreeSessions = () => {
