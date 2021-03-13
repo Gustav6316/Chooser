@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import Lobby from "./Lobby/Lobby";
 import Login from "./Login/Login";
-import Choosing from "./Choosing/choosing";
+import Choosing from "./Choosing/Choosing";
 import Rating from "./Rating/Rating";
 
 const App = () => (

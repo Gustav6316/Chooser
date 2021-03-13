@@ -21,11 +21,11 @@ const Choosing = (props) => {
                     endFilms[i] = cards[i];
                 }
             });
-        //currentFilm = endFilms[count].subject;
-
+    console.log(endFilms);
     }
 
     test();
+    currentFilm = 'endFilms';
 
 
 

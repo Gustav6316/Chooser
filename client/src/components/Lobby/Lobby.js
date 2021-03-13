@@ -7,7 +7,7 @@ import { Container, Button } from "react-bootstrap";
 import './Lobby.css'
 import Userlist from './Userlist'
 import reducer from './reducer';
-import Choosing from "../Choosing/choosing";
+import Choosing from "../Choosing/Choosing";
 import Rating from "../Rating/Rating";
 
 import api, {getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard} from '../api';
