@@ -5,7 +5,6 @@ import queryString from 'query-string';
 import uniqid from 'uniqid';
 
 import api, {testInterceptor}  from '../api'
-import Sessionlist from './Sessionlist'
 import './Login.css'
 
 export default function Login() {
