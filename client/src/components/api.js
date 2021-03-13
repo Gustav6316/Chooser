@@ -124,7 +124,7 @@ export const deleteSession = (sessionid) => {
 *   Erwarteter Request-Body: {sessionid: , subject:, score:}
 */
 export const updateScore = (cardData) => {
-  api.patch(`/sessions`, cardData)
+  api.patch(`/cards`, cardData)
    .then(res => {                                    
     return res.status;
   });

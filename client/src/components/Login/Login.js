@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import uniqid from 'uniqid';
 //import Sessionlist from './Sessions'
 
-import api, {getLastThreeSessions}  from '../api'
+import api, {getLastThreeSessions, updateScore}  from '../api'
 import Sessionlist from './Sessionlist'
 import './Login.css'
 
@@ -34,7 +34,7 @@ export default function Login() {
             subject: 'another film',
             score: 10
         }
-
+        updateScore(cardToUpdate);
         api.patch(`/cards`, cardToUpdate)
          .then(res => {                                    
           return res.data;
