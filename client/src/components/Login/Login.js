@@ -5,7 +5,7 @@ import queryString from 'query-string';
 import uniqid from 'uniqid';
 //import Sessionlist from './Sessions'
 
-import api, {getLastThreeSessions, updateScore}  from '../api'
+import api, {getLastThreeSessions, updateScore, testInterceptor}  from '../api'
 import Sessionlist from './Sessionlist'
 import './Login.css'
 
@@ -28,6 +28,11 @@ export default function Login() {
       
       }
  */
+
+      const testRequest = () => {
+          testInterceptor();
+      }
+
       const updateCard = () => {
         const cardToUpdate = 
         {   sessionid: 'test',
@@ -68,7 +73,7 @@ export default function Login() {
 
     return (
     <Container className="align-items-center" style={{width: '100%'}}>
-        <Button variant='warning' onClick={updateCard}>Testbutton</Button>
+        <Button variant='warning' onClick={testInterceptor}>Testbutton</Button>
         <Card className="card-login mx-auto text-center bg-light">
             <Card.Header className="mx-auto bg-success rounded">
                 <h4> Welcome to Chooser </h4>

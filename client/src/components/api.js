@@ -5,6 +5,17 @@ export const api = axios.create({
   withCredentials: false,
 });
 
+const returnError = (err) => {
+  console.log(err.message);
+  return err;
+}
+
+export const testInterceptor = () => {
+  axios.get('https://httpbin.org/status/404')
+    .then(res => { return res.status })
+    .catch(err => returnError(err))
+}
+
 /* GET ----------------------------------------------- */
 // Gibt alle User aus
 export const getUsers = () => {
@@ -13,7 +24,7 @@ export const getUsers = () => {
    .then(res => {
     return res.data;
   }) 
-
+  .catch(err => returnError(err))
 }
 
 // Gibt User mit Parameter :id aus
@@ -24,7 +35,7 @@ export const getUser = (id) => {
     let user = res.data;
     return user
   }) 
-
+  .catch(err => returnError(err))
 }
 
 // Gibt alle Karten einer Session aus
@@ -34,8 +45,8 @@ export const getCards = (sessionid) => {
    .then(res => {
     console.log(res.data)                                   
     return res.data;
-  });
-
+  })
+  .catch(err => returnError(err))
 }
 
 // Gibt die letzten drei Sessions aus
@@ -45,11 +56,8 @@ export const getLastThreeSessions = () => {
    .then(res => {                                    
     let sessions = res.data;
     return sessions
-  },
-  (error) => {
-    console.log('Error getting last three sessions');
-    return 'Sorry, something went wrong'
-  }) 
+  })
+  .catch(err => returnError(err))
 
 }
 
@@ -65,7 +73,7 @@ export const addUser = (user) => {
    .then(res => {                                    
     return res.status;
   }) 
-
+  .catch(err => returnError(err))
 }
 
 /*  Legt eine Session an unter Angabe folgender Daten:
@@ -78,7 +86,7 @@ export const addSession = (session) => {
    .then(res => {                                    
     return res.status;
   }) 
-
+  .catch(err => returnError(err))
 }
 
 /*  Legt eine Karte(Vorschlag) an unter Angabe folgender Daten:
@@ -89,8 +97,8 @@ export const addCard = (card) => {
   api.post(`/cards`, card)
    .then(res => {                                    
     return res.statusText;
-  });
-
+  })
+  .catch(err => returnError(err))
 }
 
 /*  Pusht alle Karten eines JSON-Arrays in die Datenbank
@@ -114,7 +122,8 @@ export const deleteSession = (sessionid) => {
   api.delete(`/sessions/${sessionid}`)
    .then(res => {                                    
     return res.status;
-  });
+  })
+  .catch(err => returnError(err))
 }
 
 /* PATCH  ----------------------------------------------- */
@@ -127,7 +136,8 @@ export const updateScore = (cardData) => {
   api.patch(`/cards`, cardData)
    .then(res => {                                    
     return res.status;
-  });
+  })
+  .catch(err => returnError(err))
 }
 
 export default api;
