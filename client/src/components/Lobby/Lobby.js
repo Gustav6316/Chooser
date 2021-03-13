@@ -20,34 +20,18 @@ const Lobby = ({ location, props }) => {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
+  const [inviteLink, setInviteLink] = useState(`localhost:3000/?room=`);
   const ENDPOINT = 'http://localhost:4000';
-
-  
-  /*  Schickt GET and an die API/users und gibt ein JSON Array aus.
-  *   Wird unten in Zeile 91 in einem Button zum testen abgerufen
-  */
-    const getUserData = (test) => { // Wird beim Click auf Get User Data Now! aufgerufen
-
-      api.get('/users')
-       .then(res => {                                     //promise
-        setUsers(res.data);                               // update State
-      })
-
-      getCards('test');     // Gibt JSON Array wieder
-      getCards(room);       // Gibt bei Gültiger Sessionid auch ein JSON Array wieder
-      //getCards(String)    => Infinite Loop wenn String mit Button übergeben wird
-      //                    Lösung: getCards muss über useState Werte bekommen.
-    }
-
 
   useEffect(() => {
     const { username, room } = queryString.parse(location.search);
+    
 
     socket = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] });
 
     setUsername(username);
     setRoom(room);
-
+    setInviteLink(`localhost:3000/?room=${room}`)
     socket.emit('join', { username, room }, () => {
     });
 
@@ -123,9 +107,9 @@ let roomTest = 'test';
     {/*               <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>*/}
 
     {/*            </ul>*/}
-
+     {(inviteLink===undefined) ? <h5>loading...</h5> : <h8>{inviteLink}</h8>}
     {/*       </div>*/}
-
+    
     {/*{<Userlist users={ users }/>}*/}
 
     {/*{<Button variant='warning' onClick={getUserData}>Get User Data now!</Button>}*/}
