@@ -16,7 +16,7 @@ import api, {getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSes
 
 let socket;
 
-const Lobby = ({ location }) => {
+const Lobby = ({ location, props }) => {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Container, Form, Button, Row, Card, ListGroup, Accordion} from "react-bootstrap";
 import queryString from 'query-string';
 import uniqid from 'uniqid';
-//import Sessionlist from './Sessions'
 
 import api, {testInterceptor}  from '../api'
 import Sessionlist from './Sessionlist'
@@ -30,7 +29,7 @@ export default function Login() {
       }, []);
 
     // temporär bis das exports Problem gelöst ist
-     function getLastThreeSessions() {
+     const getLastThreeSessions = async () => {
 
         api.get(`/sessions`)
          .then(res => {
@@ -44,6 +43,7 @@ export default function Login() {
         }) 
       
       }
+      
 
     return (
     <Container className="align-items-center" style={{width: '100%'}}>
@@ -64,7 +64,31 @@ export default function Login() {
                     </Link>
                 </Form>
                 <Container>
-                        {(sessions === null) ? <h3>Loading...</h3> : <Sessionlist sessions={sessions}/>}
+                    <Accordion defaultActiveKey="0">
+                        <Card>
+                            <Card.Header>
+                            <Accordion.Toggle as={Button} variant="success" eventKey="0">
+                                Was ist Chooser?
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="0">
+                                <Card.Body> Herzlich Willkommen zu Chooser!
+                                            Ihr wisst nicht welchen Film ihr anschauen wollt, 
+                                            oder was ihr essen sollt? Dann könnt ihr hier ganz leicht zu einer zufriedenstellende Entscheidung kommen
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                        <Card>
+                            <Card.Header>
+                            <Accordion.Toggle as={Button} variant="success" eventKey="1">
+                                Wie funktioniert Chooser?
+                            </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey="1">
+                                <Card.Body>So:</Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    </Accordion>
                 </Container>
             </Card.Body>
         </Card>

@@ -49,11 +49,12 @@ export const getCards = (sessionid) => {
 }
 
 //  Gibt den Gewinner aus
-export const getWinner = async (sessionid) => {
+export const getWinner = (sessionid) => {
   api.get(`/winner/${sessionid}`)
   .then(res => {
+    let data = res.data
     console.log(res.data)
-    return res.data;
+    return data;
   })
   .catch(err => returnError(err))
 }
@@ -66,6 +67,21 @@ export const getWinners = (sessionid) => {
     return res.data;
   })
   .catch(err => returnError(err))
+}
+
+export const getLastThreeSessions = async () => {
+
+  api.get(`/sessions`)
+   .then(res => {
+     let data = res.data;                               
+    return data;
+  },
+  (error) => {
+    console.log('Error getting last three sessions');
+    console.log(error);
+    return;
+  }) 
+
 }
 
 /* POST   ----------------------------------------------- */
