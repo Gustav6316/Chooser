@@ -2,41 +2,66 @@ import React, {useState} from "react";
 import Item from "./Item/Item"
 import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Row} from "react-bootstrap";
-import api from '../api';
+import api  from '../api';
+
 
 
 const Choosing = (props) => {
     const [count, setCount] = useState(0);
-
-    let filmsArray = [];
-    let endFilms = {};
-    let currentFilm = '';
+    const [filmsArray, setFilmsArray] = useState('')
+    const [fullFilms, setFullFilms] = useState('')
+    let isTestAlreadyDid = false;
+   //  let filmsArray =[];
+   //  let fullFilms = {};
+     let currentFilm = '';
     const test = () => {
-        api.get(`/cards/${'test'}`)
+        isTestAlreadyDid = true;
+        api.get(`/cards/${props.room}`)
             .then(res => {
                 let cards = res.data;
+                setCount(cards.length);
 
-                for (let i = 0; i < cards.length; i++) {
-                    filmsArray[i] = cards[i].subject;
-                    endFilms[i] = cards[i];
-                }
             });
-    console.log(endFilms);
+
+    console.log(count);
     }
 
-    test();
+
+    if(!isTestAlreadyDid) test();
+    console.log(fullFilms);// console.log:
+    // 0: {cardid: 5, subject: "Movie 4", description: "Another Description", sessionid: "test", score: 6}
+    // 1: {cardid: 18, subject: "com oncc", description: "test desc", sessionid: "test", score: 0}
+    // 2: {cardid: 19, subject: "another film", description: "test desc", sessionid: "test", score: 0}
+    // __proto__: Object
+
+    console.log(fullFilms.subject);//  undefined и также если через fullFilms[0] обраащаться
+
     currentFilm = 'endFilms';
 
 
+    const updateScore = (cardData) => {
+        api.patch(`/sessions`, cardData)
+            .then(res => {
+                return res.status;
+            });
+    }
+    updateScore({
+        sessionid:'test',
+        subject: 'mvs1',
+        score:5});
 
 
     let plusPoint = (props1) => {
 
-        endFilms[count].score += props1;
-        if (count >= filmsArray.length - 1) {
+        updateScore({
+            sessionid:'test',
+            subject: 'Movie 4',
+            score:5});
 
-            return props.toTheLobby(endFilms);
-        } else setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Rating.jsx zurückgegeben
+        if (count <= 0) {
+
+            return props.toTheLobby();
+        } else setCount(count -1);       //wird diese F gerufen und sortierte Map in die Rating.jsx zurückgegeben
     };
 
     // const scoreTogether = () => {
@@ -58,7 +83,7 @@ const Choosing = (props) => {
             <Row className="justify-content-md-center">
 
                 <Col md="auto">
-                    <Item plusPoint={plusPoint} filmToShow={currentFilm}></Item>
+                    <Item plusPoint ={plusPoint} filmToShow={currentFilm}></Item>
                 </Col>
 
             </Row>
