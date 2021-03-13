@@ -15,7 +15,7 @@ export default function Login() {
     const [sessions, setSessions] = useState('');
 
     // temporär bis das exports Problem gelöst ist
-    const getLastThreeSessions = () => {
+/*     const getLastThreeSessions = () => {
 
         api.get(`/sessions`)
          .then(res => {                                    
@@ -27,7 +27,24 @@ export default function Login() {
         }) 
       
       }
+ */
+      const updateCard = () => {
+        const cardToUpdate = 
+        {   sessionid: 'test',
+            subject: 'another film',
+            score: 10
+        }
 
+        api.patch(`/cards`, cardToUpdate)
+         .then(res => {                                    
+          return res.data;
+        },
+        (error) => {
+          console.log('Error getting last three sessions');
+          console.log(error);
+        }) 
+      
+      }
 
     useEffect(() => {
         console.log(room)
@@ -51,6 +68,7 @@ export default function Login() {
 
     return (
     <Container className="align-items-center" style={{width: '100%'}}>
+        <Button variant='warning' onClick={updateCard}>Testbutton</Button>
         <Card className="card-login mx-auto text-center bg-light">
             <Card.Header className="mx-auto bg-success rounded">
                 <h4> Welcome to Chooser </h4>
