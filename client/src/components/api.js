@@ -49,18 +49,6 @@ export const getCards = (sessionid) => {
   .catch(err => returnError(err))
 }
 
-// Gibt die letzten drei Sessions aus
-export const getLastThreeSessions = () => {
-
-  api.get(`/sessions`)
-   .then(res => {                                    
-    let sessions = res.data;
-    return sessions
-  })
-  .catch(err => returnError(err))
-
-}
-
 /* POST   ----------------------------------------------- */
 
 /*  Legt einen Benutzer an unter Angabe folgender Daten:

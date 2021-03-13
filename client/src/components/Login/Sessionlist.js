@@ -1,14 +1,20 @@
-import { ListGroup, ThemeProvider } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import './Login.css'
 
-const Sessionlist = ({sessions}) => {
-<ListGroup>
-    <h3>Last 3 Sessions</h3>
-    {toList(sessions)}
-</ListGroup>
+function Sessionlist(props) {
+    console.log(props.sessions);
+    console.log(toList(props.sessions));
+    return (
+        <ListGroup className='Sessions'>
+            <h3>Last 3 Sessions</h3>
+            {props.sessions ? toList(props.sessions) : <h1>No Sessions</h1>}
+        </ListGroup>
+    );
+
 }
 
 //  Generiert Listenelemente aus dem übergebenen sessions Array
-const toList = (sessions) => (sessions.map((session) =>  <li key={session.sessionid}>Topic: {session.topic}</li>));
+const toList = (sessions) => (sessions.map((session) =>  <ListGroupItem key={session.sessionid}>Topic: {session.topic}</ListGroupItem>));
 
 export default Sessionlist;
 

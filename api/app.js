@@ -9,6 +9,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const sessionsRouter = require('./routes/sessions');
 const cardsRouter = require('./routes/cards');
+const winnerRouter = require('./routes/winner');
+const winnersRouter = require('./routes/winners');
 
 const app = express();
 
@@ -37,5 +39,7 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/cards', cardsRouter);
+app.use('/api/winner', winnerRouter);
+app.use('/api/winners', winnersRouter);
 
 module.exports = app;

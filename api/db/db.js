@@ -80,17 +80,33 @@ const createUser = (req, res) => {
     })
 }
 
-const getSessionData = (req, res) => {
-    pool.query('SELECT $1 FROM public.sessions', [req.body.sessionid], (err, results) => {
+const getWinners = (req, res) => {
+    pool.query('SELECT * from public.cards WHERE sessionid = $1 ORDER BY score DESC LIMIT 3', [req.params.sessionid], (err, results) => {
         if (err) {
-            throw err;
-            res.status(404).send(`Could not find session with ID: ${req.body.sessionID}`);
+            console.error(err);
+            res.status(404).send(`Could not find session with ID: ${req.params.sessionid}`);
             return;
         }
 
         res.status(200).json(results.rows);
     });
 }
+
+const getWinner = (req, res) => {
+    pool.query('SELECT * from public.cards WHERE sessionid = $1 ORDER BY score DESC LIMIT 1', [req.params.sessionid], (err, results) => {
+        if (results.rowCount === 0 || results.rows[0].score === 0) {
+            res.status(200).send(`No winner for Session ${req.params.sessionid}`)
+        }
+        if (err) {
+            console.error(err);
+            res.status(404).send(`Could not find session with ID: ${req.params.sessionid}`);
+            return;
+        }
+
+        res.status(200).json(results.rows);
+    });
+}
+
 
 /* Gibt die letzten drei Sessions aus 
 */
@@ -198,4 +214,4 @@ const updateScore = (req, res) => {
     }
 
 module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions,
-        addCard, createSession, getCards, deleteSession, updateScore }
+        addCard, createSession, getCards, deleteSession, updateScore, getWinner, getWinners }

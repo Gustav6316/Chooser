@@ -8,7 +8,7 @@ import api from '../api';
 const Choosing = (props) => {
     const [count, setCount] = useState(0);
     const [error, setError] = useState('')
-    const [fullFilms, setFullFilms] = useState([])
+    const [fullFilms, setFullFilms] = useState(undefined); //temporär geändert
     const [isLoaded, setIsLoaded] = useState(false);
 
     // const test = () => {
@@ -79,11 +79,12 @@ const Choosing = (props) => {
 
                 <Col md="auto">
 
-                    <Item plusPoint={plusPoint} filmToShow={fullFilms[count].subject}></Item>//hier hat alles funktioniert!Jetzt aber cannot rad property of undefined
+                    {(fullFilms === undefined) ? <h3>Loading...</h3>: <Item plusPoint={plusPoint} filmToShow={fullFilms[count].subject}></Item>}
+
                 </Col>
 
             </Row>
-            <Row><Col>{`Movie Batman now has ${fullFilms[0].score}points`}</Col></Row>
+            <Row><Col> {(fullFilms === undefined) ? <h3>Loading...</h3> : `Movie Batman now has ${fullFilms[0].score}points`}</Col></Row>
             {/*<Row><Col>{`Movie Batman now has ${endFilms[1].score} points`}</Col></Row>*/}
             {/*<Row><Col>{`Movie Batman now has ${endFilms[2].score} points`}</Col></Row>*/}
             {/*<Row><Col>{`Movie Batman now has ${endFilms[3].score} points`}</Col></Row>*/}

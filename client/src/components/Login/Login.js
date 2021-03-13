@@ -1,75 +1,49 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Form, Button, Row, Card, ListGroup, ListGroupItem} from "react-bootstrap";
+import { Container, Form, Button, Row, Card, ListGroup, Accordion} from "react-bootstrap";
 import queryString from 'query-string';
 import uniqid from 'uniqid';
 //import Sessionlist from './Sessions'
 
-import api, {getLastThreeSessions, updateScore, testInterceptor}  from '../api'
+import api, {testInterceptor}  from '../api'
 import Sessionlist from './Sessionlist'
 import './Login.css'
 
 export default function Login() {
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
-    const [sessions, setSessions] = useState('');
-
-    // temporär bis das exports Problem gelöst ist
-/*     const getLastThreeSessions = () => {
-
-        api.get(`/sessions`)
-         .then(res => {                                    
-          return res.data;
-        },
-        (error) => {
-          console.log('Error getting last three sessions');
-          console.log(error);
-        }) 
-      
-      }
- */
-
-      const testRequest = () => {
-          testInterceptor();
-      }
-
-      const updateCard = () => {
-        const cardToUpdate = 
-        {   sessionid: 'test',
-            subject: 'another film',
-            score: 10
-        }
-        updateScore(cardToUpdate);
-        api.patch(`/cards`, cardToUpdate)
-         .then(res => {                                    
-          return res.data;
-        },
-        (error) => {
-          console.log('Error getting last three sessions');
-          console.log(error);
-        }) 
-      
-      }
+    const [sessions, setSessions] = useState(null);
 
     useEffect(() => {
         console.log(room)
+        getLastThreeSessions()
+        console.log(sessions)
         if (Object.keys(queryString.parse(window.location.search)).length === 0) {
             let id = uniqid();
             setRoom(id);
-            console.log(room)
             return;
         } else {
 
             const { room } = queryString.parse(window.location.search);
             setRoom(room);
-
-            console.log(room);
         }
       }, []);
 
-      useEffect(() => {
-        setSessions(getLastThreeSessions);
-      }, [])
+    // temporär bis das exports Problem gelöst ist
+     function getLastThreeSessions() {
+
+        api.get(`/sessions`)
+         .then(res => {
+             setSessions(res.data)                               
+          return;
+        },
+        (error) => {
+          console.log('Error getting last three sessions');
+          console.log(error);
+          return;
+        }) 
+      
+      }
 
     return (
     <Container className="align-items-center" style={{width: '100%'}}>
@@ -90,12 +64,7 @@ export default function Login() {
                     </Link>
                 </Form>
                 <Container>
-                    <ListGroup className="Sessions">
-                        <h3>Last 3 Sessions</h3>
-                        <ListGroupItem>Element 1</ListGroupItem>
-                        <ListGroupItem>Element 2</ListGroupItem>
-                        <ListGroupItem>Element 3</ListGroupItem>
-                    </ListGroup>
+                        {(sessions === null) ? <h3>Loading...</h3> : <Sessionlist sessions={sessions}/>}
                 </Container>
             </Card.Body>
         </Card>
