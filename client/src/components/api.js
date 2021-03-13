@@ -31,10 +31,10 @@ export const getUser = (id) => {
 export const getCards = (sessionid) => {
 
   api.get(`/cards/${sessionid}`)
-   .then(res => {                                    
-    let cards = res.data;
-    return cards
-  }) 
+   .then(res => {
+    console.log(res.data)                                   
+    return res.data;
+  });
 
 }
 
@@ -47,7 +47,8 @@ export const getLastThreeSessions = () => {
     return sessions
   },
   (error) => {
-    console.log('Error getting last three sessions')
+    console.log('Error getting last three sessions');
+    return 'Sorry, something went wrong'
   }) 
 
 }
@@ -95,7 +96,7 @@ export const addCard = (card) => {
 /*  Pusht alle Karten eines JSON-Arrays in die Datenbank
 *   @param JSON-Array mit Karten Format: {subject: , description: , sessionid:}
 */
-const pushDeck = (deck) => {
+export const pushDeck = (deck) => {
 
   for (let index = 0; index < deck.length; index++) {
     addCard(deck[index]);

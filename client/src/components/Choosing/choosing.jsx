@@ -1,34 +1,34 @@
 import React, {useEffect, useState} from "react";
 import Item from "./Item/Item"
 import "bootstrap/dist/css/bootstrap.css";
-import {Col, Container, Row} from "react-bootstrap";
-import api, {} from '../api';
+import {Col, Container, Row, Button} from "react-bootstrap";
+import api, {getCards} from '../api';
 
- const getCards = (sessionid) => {
 
-    api.get(`/cards/${'test'}`)
-        .then(res => {
-            let cards = res.data;
-            console.log(cards);
-            return cards
-        })
-
-}
-
-//props.room  - für später
-console.log(getCards('test'));
 
 const Choosing = (props) => {
-    alert("fffffff");
 
+    const test = (sessionid) => {
+        api.get(`/cards/${sessionid}`)
+         .then(res => {
+          let cards = res.data;
+          console.log(cards);
+          return cards
+        });
+    }
 
+    let data2 = getCards('test');//props.room  - für später
 
     let data = new Map();
     data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);// Diese Daten mussen von DB stammen
 
     const [count, setCount] = useState(0);
 
-
+    useEffect(() => {
+        // app.post('http://localhost:5000/api/cards')
+        //     .then(response => response.json())
+        //     .then(data1 => setData1(data1));
+    });
 
 
     let filmsArray = Array.from(data, ([name]) => ({name}));// Dies wird aber lokal gespeichert
@@ -62,6 +62,8 @@ const Choosing = (props) => {
 // String verkürzt von "String" + Value + "String" auf `String ${value} more String`
     return (
         <Container align-items='center'>
+
+            <Button variant='danger' onClick={test('test')}> Test Function </Button>
             <Row className="justify-content-md-center">
 
                 <Col md="auto">
