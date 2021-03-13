@@ -2,27 +2,33 @@ import React, {useEffect, useState} from "react";
 import Item from "./Item/Item"
 import "bootstrap/dist/css/bootstrap.css";
 import {Col, Container, Row} from "react-bootstrap";
-import api, {getCards} from '../api';
+import api, {} from '../api';
 
+ const getCards = (sessionid) => {
 
+    api.get(`/cards/${'test'}`)
+        .then(res => {
+            let cards = res.data;
+            console.log(cards);
+            return cards
+        })
 
+}
 
+//props.room  - für später
+console.log(getCards('test'));
 
 const Choosing = (props) => {
+    alert("fffffff");
 
-    let data2 = JSON.stringify(getCards('test'));//props.room  - für später
-    console.log(data2);
+
 
     let data = new Map();
     data.set("Batman", 0).set("Hobbit", 0).set("Matrix", 0).set("Bond", 0);// Diese Daten mussen von DB stammen
 
     const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        // app.post('http://localhost:5000/api/cards')
-        //     .then(response => response.json())
-        //     .then(data1 => setData1(data1));
-    });
+
 
 
     let filmsArray = Array.from(data, ([name]) => ({name}));// Dies wird aber lokal gespeichert
@@ -37,16 +43,16 @@ const Choosing = (props) => {
         else setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Rating.jsx zurückgegeben
     };
 
-    const scoreTogether = () => {
-        //hier müssen die Scores aller Players addiert werden und als return zurückgegeben werden
-        for (let i = 0; i < filmsArray.length; i++) {//array.length
-            let film = filmsArray[i];
-            // for (){//players.number.length
-            //     data.set(film, data.get(film))//
-            // }
-        }
-
-    }
+    // const scoreTogether = () => {
+    //     //hier müssen die Scores aller Players addiert werden und als return zurückgegeben werden
+    //     for (let i = 0; i < filmsArray.length; i++) {//array.length
+    //         let film = filmsArray[i];
+    //         // for (){//players.number.length
+    //         //     data.set(film, data.get(film))//
+    //         // }
+    //     }
+    //
+    // }
 
 
     const showScore = () => {

@@ -28,6 +28,7 @@ const Lobby = ({ location }) => {
   const [users, setUsers] = useState('');
   const ENDPOINT = 'http://localhost:4000';
 
+  
   /*  Schickt GET and an die API/users und gibt ein JSON Array aus.
   *   Wird unten in Zeile 91 in einem Button zum testen abgerufen
   */
