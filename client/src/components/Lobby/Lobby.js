@@ -75,14 +75,35 @@ const Lobby = ({ location }) => {
     const [state, dispatch] = React.useReducer(reducer, {// zum Switchen da
         joined: false,
     });
-    const addCardBtn = () => {// Add cars button
+    const addCardBtn1 = () => {// Add cars button
         let suggestion = document.getElementById('btn1').value;
         if (!suggestion) {
           alert("Please enter some suggestion!");
           return;
         }// wenn das Feld leer ist, wird returned
         addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
+        document.getElementById('button1').hidden = true;
     }
+    const addCardBtn2 = () => {// Add cars button
+        let suggestion = document.getElementById('btn2').value;
+        if (!suggestion) {
+          alert("Please enter some suggestion!");
+          return;
+        }// wenn das Feld leer ist, wird returned
+        addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
+        document.getElementById('button2').hidden = true;
+    }
+    const addCardBtn3 = () => {// Add cars button
+        let suggestion = document.getElementById('btn3').value;
+        if (!suggestion) {
+          alert("Please enter some suggestion!");
+          return;
+        }// wenn das Feld leer ist, wird returned
+        addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
+       // document.getElementById('btn3').value = '';
+        document.getElementById('button3').hidden = true;
+    }
+
 //HTML für die Lobby
   return (
     <div>
@@ -90,14 +111,17 @@ const Lobby = ({ location }) => {
            <div className="container float-left">
                <h1 className="align-center">Lobby</h1>
                <ul className="list-group" id="elementList">
-                   <input id='btn1' class="list-group-item" type='text' placeholder="Write your first Suggestion!"/>
-                   <button onClick={addCardBtn} type="submit">Submit</button>
-                   <input id='btn1' className="list-group-item" type='text'
+
+                   <input id='btn1' class="list-group-item" type='text'
+                          placeholder="Write your first Suggestion!"/>
+                   <button id='button1' onClick={addCardBtn1} type="submit">Submit</button>
+                   <input id='btn2' className="list-group-item" type='text'
                           placeholder="Write your second Suggestion!"/>
-                   <button onClick={addCardBtn} type="submit">Submit</button>
-                   <input id='btn1' className="list-group-item" type='text'
+                   <button id='button2' onClick={addCardBtn2}  type="submit">Submit</button>
+                   <input id='btn3' className="list-group-item" type='text'
                           placeholder="Write your third Suggestion!"/>
-                   <button onClick={addCardBtn} type="submit">Submit</button>
+                   <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>
+
                 </ul>
 
            </div>
