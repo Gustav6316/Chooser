@@ -83,7 +83,7 @@ const Choosing = (props) => {
 
                 </Col>
 
-            </Row>
+            </Row> 
             <Row><Col> {(fullFilms === undefined) ? <h3>Loading...</h3> : `Movie Batman now has ${fullFilms[0].score}points`}</Col></Row>
             {/*<Row><Col>{`Movie Batman now has ${endFilms[1].score} points`}</Col></Row>*/}
             {/*<Row><Col>{`Movie Batman now has ${endFilms[2].score} points`}</Col></Row>*/}
