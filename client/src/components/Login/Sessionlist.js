@@ -1,4 +1,5 @@
 import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import { getWinner } from "../api";
 import './Login.css'
 
 function Sessionlist(props) {
@@ -14,7 +15,18 @@ function Sessionlist(props) {
 }
 
 //  Generiert Listenelemente aus dem übergebenen sessions Array
-const toList = (sessions) => (sessions.map((session) =>  <ListGroupItem key={session.sessionid}>Topic: {session.topic}</ListGroupItem>));
+function getSubject(sessionid) {
+
+    console.log(getWinner(sessionid))
+    let winner = getWinner(sessionid);
+
+    console.log(`Hier ist er: ${winner} ID: ${sessionid}`)
+
+    if (winner === undefined) return 'no winner'
+    
+    return winner.subject;
+}
+const toList = (sessions) => (sessions.map((session) =>  <ListGroupItem key={session.sessionid}>Topic: {session.topic} <br/> Winner: {getSubject(session.sessionid)} </ListGroupItem>));
 
 export default Sessionlist;
 

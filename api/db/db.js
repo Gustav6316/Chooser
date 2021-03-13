@@ -25,6 +25,18 @@ function checkIfEmpty (req, res) {
     return false;
 }
 
+function checkWinner (req, res, results, err) {
+    if (results.rowCount === 0 || results.rows[0].score === 0) {
+        res.status(200).send(`No winner for Session ${req.params.sessionid}`)
+        return false;
+    }
+    if (err) {
+        console.error(err);
+        res.status(404).send(`Could not find session with ID: ${req.params.sessionid}`);
+        return false;
+    }
+    return true;
+}
 //const sql = postgres('postgres://dbadmin:h&!0eTA2l@212.227.192.158:5432/chooserdb');
 
 // Gibt alle User aus
@@ -82,28 +94,22 @@ const createUser = (req, res) => {
 
 const getWinners = (req, res) => {
     pool.query('SELECT * from public.cards WHERE sessionid = $1 ORDER BY score DESC LIMIT 3', [req.params.sessionid], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(404).send(`Could not find session with ID: ${req.params.sessionid}`);
-            return;
+        if (checkWinner(req, res, results, err)) {
+            res.status(200).json(results.rows);
         }
 
-        res.status(200).json(results.rows);
+        return;
     });
 }
 
 const getWinner = (req, res) => {
     pool.query('SELECT * from public.cards WHERE sessionid = $1 ORDER BY score DESC LIMIT 1', [req.params.sessionid], (err, results) => {
-        if (results.rowCount === 0 || results.rows[0].score === 0) {
-            res.status(200).send(`No winner for Session ${req.params.sessionid}`)
-        }
-        if (err) {
-            console.error(err);
-            res.status(404).send(`Could not find session with ID: ${req.params.sessionid}`);
-            return;
+
+        if (checkWinner(req, res, results, err)) {
+            res.status(200).json(results.rows);
         }
 
-        res.status(200).json(results.rows);
+        return;
     });
 }
 

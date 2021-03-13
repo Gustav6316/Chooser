@@ -40,10 +40,29 @@ export const getUser = (id) => {
 
 // Gibt alle Karten einer Session aus
 export const getCards = (sessionid) => {
-  console.log(`/cards/${sessionid}`)
   api.get(`/cards/${sessionid}`)
    .then(res => {
     console.log(res.data)                                   
+    return res.data;
+  })
+  .catch(err => returnError(err))
+}
+
+//  Gibt den Gewinner aus
+export const getWinner = async (sessionid) => {
+  api.get(`/winner/${sessionid}`)
+  .then(res => {
+    console.log(res.data)
+    return res.data;
+  })
+  .catch(err => returnError(err))
+}
+
+//  Gibt die Top 3 aus
+export const getWinners = (sessionid) => {
+  api.get(`/winners/${sessionid}`)
+  .then(res => {
+    console.log(res.data)
     return res.data;
   })
   .catch(err => returnError(err))
