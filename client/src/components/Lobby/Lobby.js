@@ -92,23 +92,23 @@ let roomTest = 'test';
   return (
     <div>
 
-    {/*       <div className="container float-left">*/}
-    {/*           <h1 className="align-center">Lobby</h1>*/}
-    {/*           <ul className="list-group" id="elementList">*/}
+           <div className="container float-left">
+               <h1 className="align-center">Lobby</h1>
+               <ul className="list-group" id="elementList">
 
-    {/*               <input id='btn1' class="list-group-item" type='text'*/}
-    {/*                      placeholder="Write your first Suggestion!"/>*/}
-    {/*               <button id='button1' onClick={addCardBtn1} type="submit">Submit</button>*/}
-    {/*               <input id='btn2' className="list-group-item" type='text'*/}
-    {/*                      placeholder="Write your second Suggestion!"/>*/}
-    {/*               <button id='button2' onClick={addCardBtn2}  type="submit">Submit</button>*/}
-    {/*               <input id='btn3' className="list-group-item" type='text'*/}
-    {/*                      placeholder="Write your third Suggestion!"/>*/}
-    {/*               <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>*/}
+                   <input id='btn1' class="list-group-item" type='text'
+                          placeholder="Write your first Suggestion!"/>
+                   <button id='button1' onClick={addCardBtn1} type="submit">Submit</button>
+                   <input id='btn2' className="list-group-item" type='text'
+                          placeholder="Write your second Suggestion!"/>
+                   <button id='button2' onClick={addCardBtn2}  type="submit">Submit</button>
+                   <input id='btn3' className="list-group-item" type='text'
+                          placeholder="Write your third Suggestion!"/>
+                   <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>
 
-    {/*            </ul>*/}
+                </ul>
      {(inviteLink===undefined) ? <h5>loading...</h5> : <h8>{inviteLink}</h8>}
-    {/*       </div>*/}
+           </div>
     
     {/*{<Userlist users={ users }/>}*/}
 
