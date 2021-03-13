@@ -16,12 +16,6 @@ import api, {getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSes
 
 let socket;
 
-// Test
-/* const api = axios.create({
-  baseURL: "http://localhost:5000/api/",
-  withCredentials: false,
-}); */
-
 const Lobby = ({ location }) => {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
