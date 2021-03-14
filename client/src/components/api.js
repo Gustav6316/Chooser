@@ -70,6 +70,7 @@ export const getWinners = (sessionid) => {
   .catch(err => returnError(err))
 }
 
+//  Gibt die letzten 3 Sessions aus
 export const getLastThreeSessions = async () => {
 
   api.get(`/sessions`)
@@ -84,11 +85,12 @@ export const getLastThreeSessions = async () => {
   }) 
 
 }
-
+//  Prüft ob Session bereits existiert, wenn ja @returns 200 wenn nein, dann 404
 export const checkIfSessionExists = (sessionid) => {
   api.get(`/sessions/${sessionid}`)
    .then(res => {                                 
-    return res.status;
+    if (res.status === 200) return true;
+    else return false;
   })
   .catch(err => returnError(err))
 }
