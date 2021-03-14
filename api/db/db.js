@@ -161,7 +161,10 @@ const createSession = (req, res) => {
 */
 const getCards = (req, res) => {
     pool.query('SELECT * FROM public.cards WHERE sessionid = $1', [req.params.sessionid], (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
 
         if (results.rowCount === 0) {
             res.status(400).send(`Session ${req.params.sessionid} has no Cards yet or does not exist`);
