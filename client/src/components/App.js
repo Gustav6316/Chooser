@@ -19,8 +19,8 @@ const App = () => (
     <Router>
         <Route path="/" exact render={() => <Login setROOM={setROOM} />}/>
         <Route path="/lobby" component={Lobby}/>
-        <Route path="/choosing" render={()=> <Choosing room={'km9givo9'}/>}/>
-        <Route path="/results" render={()=> <Rating room={'test'}/>}/>
+        <Route path="/choosing" render={()=> <Choosing room={room[0]}/>}/>
+        <Route path="/results" render={()=> <Rating room={room[0]}/>}/>
     </Router>
 );
 
