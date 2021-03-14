@@ -6,38 +6,37 @@ import api from '../api';
 import {Link} from "react-router-dom";
 
 
-const Choosing = (props) => {
-    const [count, setCount] = useState(0);
-    const [error, setError] = useState('')
-    const [fullFilms, setFullFilms] = useState(undefined);
-    const [isLoaded, setIsLoaded] = useState(false);
+
+const Choosing = (props) => {// Durch props wird sessionid uebertragen
+    const [count, setCount] = useState(0);//hook fuer counter
+    const [error, setError] = useState('')//hook fuer Errorbehandlung
+    const [suggestions, setSuggestion] = useState(undefined);// hier werden die Daten aus DB gespeichert
+    const [isLoaded, setIsLoaded] = useState(false);// zur Fehlerbehandlung
+
+    // Updated die Scores in DB
     const updateScore = (cardData) => {
         api.patch(`/cards`, cardData)
             .then(res => {
                 return res.status;
             });
     }
-
+// Algorithm
     let plusPoint = (props1) => {
 
         updateScore({
             sessionid: props.room,
-            subject: fullFilms[count].subject,
+            subject: suggestions[count].subject,
             score: props1,
         });
 
-        // if (count >= fullFilms.length - 1) {
-        //
-        //     return disableItem();
-        //
-        // } else
-        setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Result.jsx zurückgegeben
+        setCount(count + 1);
     };
+
     useEffect(() => {
-        api.get(`/cards/${props.room}`)
+        api.get(`/cards/${props.room}`)// Fragt die Daten aus DB und spreicher in suggestion
             .then(res => {
                     setIsLoaded(true);
-                    setFullFilms(res.data);
+                    setSuggestion(res.data);
                 },
                 (error) => {
                     setIsLoaded(true);
@@ -52,23 +51,25 @@ const Choosing = (props) => {
     } else if (!isLoaded) {
         return <div>Loading...</div>;
     } else {
-    return (
-        <Container align-items='center'>
+        return (
+            <Container align-items='center'>
+                {/*Wird gewartet, bis alles geladen wird und die Seite gerendert*/}
+                {(suggestions === undefined) ? <h3>Loading...</h3> : <Row className="justify-content-md-center">
 
+                    <Col md="auto">
 
-            {(fullFilms === undefined) ? <h3>Loading...</h3>:  <Row className="justify-content-md-center">
+                        {!(count >= suggestions.length) ?
+                            <Item id='itemId' plusPoint={plusPoint} filmToShow={suggestions[count].subject}/> :
+                            <Link to={`/results`}><Button type="submit" className="btn-block btn-success">Show
+                                results</Button></Link>}
 
-                <Col md="auto">
+                    </Col>
 
-                    {!(count >= fullFilms.length ) ? <Item id='itemId' plusPoint={plusPoint} filmToShow={fullFilms[count].subject}/>: <Link  to={`/results`}><Button type="submit" className="btn-block btn-success">Show results</Button></Link>}
+                </Row>}
 
-                </Col>
+            </Container>
 
-            </Row>}
-
-        </Container>
-
-    );
+        );
 
     };
 
