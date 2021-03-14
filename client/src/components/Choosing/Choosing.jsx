@@ -11,7 +11,6 @@ const Choosing = (props) => {
     const [error, setError] = useState('')
     const [fullFilms, setFullFilms] = useState(undefined);
     const [isLoaded, setIsLoaded] = useState(false);
-
     const updateScore = (cardData) => {
         api.patch(`/cards`, cardData)
             .then(res => {

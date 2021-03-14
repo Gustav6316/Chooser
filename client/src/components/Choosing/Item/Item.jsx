@@ -6,6 +6,7 @@ const Item = (props) => {
     let elValue = React.createRef();
     let answerYes = () => {
 
+
         props.plusPoint(2);
     }
     let answerMid = () => {

@@ -77,6 +77,7 @@ const getUsersByID = (req, res) => {
 /* Gibt alle User aus und prüft die Syntax des requests.
 *  Sendet bei falscher Syntax einen Fehlercode und eine passende Nachricht.
 */
+
 const createUser = (req, res) => {
 
     if (checkIfEmpty(req, res)) return;

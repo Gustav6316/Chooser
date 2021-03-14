@@ -17,6 +17,7 @@ const io = socketio(server, {
     }
 });
 
+
 // Connection Event von Socket.io
 io.on('connection', (socket) => {
     console.log('New connection!');

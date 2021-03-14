@@ -13,6 +13,7 @@ const addUser = ({ id, username, room }) => {
   
     users.push(user);
 
+
     console.log('Adding User');
     console.log(users);
     return { user };
