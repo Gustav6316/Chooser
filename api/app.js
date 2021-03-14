@@ -14,7 +14,7 @@ const winnersRouter = require('./routes/winners');
 
 const app = express();
 
-//Cors package funktioniert nicht, muss mich noch einlesen
+//Cors package funktioniert nicht
 //app.use(cors);
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -35,7 +35,7 @@ app.use(
     extended: true,
   }));
 
-
+//  Benutzen der Router
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/sessions', sessionsRouter);

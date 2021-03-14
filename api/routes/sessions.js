@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 const db = require('../db/db');
 
+//  Routen für /api/sessions
 router.get('/', db.getLastThreeSessions);
-router.get('/:sessionid', db.getSessionIfExists);
 router.post('/', db.createSession);
 router.delete('/:sessionid');
 

@@ -96,7 +96,7 @@ const createUser = (req, res) => {
         res.status(201).send(`User added with ID:${req.body.id} and name:${req.body.name}`);
     })
 }
-
+// Gibt die top 3 einer Session aus
 const getWinners = (req, res) => {
     pool.query('SELECT * from public.cards WHERE sessionid = $1 ORDER BY score DESC LIMIT 3', [req.params.sessionid], (err, results) => {
         if (checkWinner(req, res, results, err)) {
@@ -106,7 +106,7 @@ const getWinners = (req, res) => {
         return;
     });
 }
-
+//  Gibt den Gewinner 
 const getWinner = (req, res) => {
     pool.query('SELECT * from public.cards WHERE sessionid = $1 ORDER BY score DESC LIMIT 1', [req.params.sessionid], (err, results) => {
 
@@ -239,24 +239,5 @@ const updateScore = (req, res) => {
         })
     }
 
-const getSessionIfExists = (req, res) => {
-
-    pool.query('SELECT * from public.sessions where sessionid=$1;', [req.params.sessionid], (err, results) => {
-        if (err) {
-            console.error(err);
-            res.status(400).send('SQL ERROR');
-            return;
-        }
-
-        if (results.rowCount === 0) {
-            res.status(404).send('Session not found');
-            return;
-        }
-
-        res.status(200).send('OK');
-
-    })
-}
-
 module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions,
-        addCard, createSession, getCards, deleteSession, updateScore, getWinner, getWinners, getSessionIfExists }
+        addCard, createSession, getCards, deleteSession, updateScore, getWinner, getWinners }

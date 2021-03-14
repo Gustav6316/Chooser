@@ -11,6 +11,7 @@ const returnError = (err) => {
   return err;
 }
 
+//  Zum testen
 export const testInterceptor = () => {
   axios.get('https://httpbin.org/status/404')
     .then(res => { return res.status })

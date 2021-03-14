@@ -8,10 +8,12 @@ import './Lobby.css'
 import api, {addCard, addSession} from '../api';
 import {Link} from "react-router-dom";
 
-
+//  socket initialisieren
 let socket;
 
+//  Komponente Lobby
 const Lobby = ({location}) => {
+    // Initialisierung der State variablen und der dazugehörigen setter
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
     const [users, setUsers] = useState('');
@@ -19,11 +21,11 @@ const Lobby = ({location}) => {
     const [hasLoaded, setHasLoaded] = useState(false);
     const ENDPOINT = 'http://localhost:4000';
 
-    useEffect(() => {
+    useEffect(() => {   // Block wird nach rendern des HTML-Codes einmal ausgeführt
         const {username, room} = queryString.parse(location.search);
 
 
-        socket = io(ENDPOINT, {transports: ['websocket', 'polling', 'flashsocket']});
+        socket = io(ENDPOINT, {transports: ['websocket', 'polling', 'flashsocket']}); //    Für CORS
 
         setUsername(username);
         setRoom(room);
@@ -130,10 +132,9 @@ const Lobby = ({location}) => {
 
             </div>
 
-            {/*{<Userlist users={ users }/>}*/}
             {/*    {(inviteLink===undefined) ? <h5>loading...</h5> : <h8>{inviteLink}</h8>}*/}
             <div>Current users online: {users.length}</div>
-
+                        {/* <Userlist users={ users }/> */}
             <div className="container float-left">
                 <button id='btnInvite' type="button" onClick={Copy}>Invite friends</button>
 
