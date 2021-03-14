@@ -16,6 +16,7 @@ const Lobby = ({location}) => {
     const [room, setRoom] = useState('');
     const [users, setUsers] = useState('');
     const [inviteLink, setInviteLink] = useState(`localhost:3000/?room=`);
+    const [hasLoaded, setHasLoaded] = useState(false);
     const ENDPOINT = 'http://localhost:4000';
 
     useEffect(() => {
@@ -26,12 +27,15 @@ const Lobby = ({location}) => {
 
         setUsername(username);
         setRoom(room);
-        setInviteLink(`localhost:3000/?room=${room}`)
+        setInviteLink(`localhost:3000/?room=${room}`);
+
+        addSession({sessionid: room, topic: 'newTopic'});
 
         socket.emit('join', {username, room}, () => {
         });
 
 
+        setHasLoaded(true);
     }, [ENDPOINT, location.search]);
 
 
@@ -101,7 +105,7 @@ const Lobby = ({location}) => {
         alert("Copied the text: " + copyText.value);
     }
 //HTML für die Lobby
-    return (
+    return ( setHasLoaded ?
         <div className='main'>
 
             <div className="container float-left">
@@ -137,7 +141,7 @@ const Lobby = ({location}) => {
             </div>
 
 
-        </div>
+        </div> : <h3>Loading...</h3>
 )
 };
 
