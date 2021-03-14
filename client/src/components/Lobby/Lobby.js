@@ -49,7 +49,6 @@ const Lobby = ({location}) => {
     }, []);
 
 
-    //useEffect(() =>{addSession({sessionid: room, topic: 'newTopic'});}); // addsession!!
 
 
     const addCardBtn1 = () => {// Add cars button
