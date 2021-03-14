@@ -67,6 +67,7 @@ const getUsersByID = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
         
         if (results.rowCount === 0) {
@@ -126,6 +127,7 @@ const getLastThreeSessions = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
 
         if (results.rowCount === 0) {
@@ -150,6 +152,7 @@ const createSession = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
 
         res.status(201).send(`Session: ${req.body.sessionid} added successfully`);
@@ -164,6 +167,7 @@ const getCards = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
 
         if (results.rowCount === 0) {
@@ -188,6 +192,7 @@ const addCard = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
 
         res.status(200).send('OK');
@@ -207,6 +212,7 @@ const deleteSession = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
         
           res.status(200).send('OK');
@@ -226,11 +232,31 @@ const updateScore = (req, res) => {
         if (err) {
             console.error(err);
             res.status(400).send('SQL ERROR');
+            return;
         }
         
             res.status(200).send('OK');
         })
     }
 
+const getSessionIfExists = (req, res) => {
+
+    pool.query('SELECT * from public.sessions where sessionid=$1;', [req.params.sessionid], (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+            return;
+        }
+
+        if (results.rowCount === 0) {
+            res.status(404).send('Session not found');
+            return;
+        }
+
+        res.status(200).send('OK');
+
+    })
+}
+
 module.exports = { getUsers, getUsersByID, createUser, getLastThreeSessions,
-        addCard, createSession, getCards, deleteSession, updateScore, getWinner, getWinners }
+        addCard, createSession, getCards, deleteSession, updateScore, getWinner, getWinners, getSessionIfExists }

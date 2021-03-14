@@ -85,6 +85,14 @@ export const getLastThreeSessions = async () => {
 
 }
 
+export const checkIfSessionExists = (sessionid) => {
+  api.get(`/sessions/${sessionid}`)
+   .then(res => {                                 
+    return res.status;
+  })
+  .catch(err => returnError(err))
+}
+
 /* POST   ----------------------------------------------- */
 
 /*  Legt einen Benutzer an unter Angabe folgender Daten:
