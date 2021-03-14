@@ -85,16 +85,6 @@ export const getLastThreeSessions = async () => {
   }) 
 
 }
-//  Prüft ob Session bereits existiert, wenn ja @returns 200 wenn nein, dann 404
-export const checkIfSessionExists = (sessionid) => {
-  api.get(`/sessions/${sessionid}`)
-   .then(res => {                                 
-    if (res.status === 200) return true;
-    else return false;
-  })
-  .catch(err => returnError(err))
-}
-
 /* POST   ----------------------------------------------- */
 
 /*  Legt einen Benutzer an unter Angabe folgender Daten:
