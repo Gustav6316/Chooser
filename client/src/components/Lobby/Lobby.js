@@ -31,6 +31,7 @@ const Lobby = ({location}) => {
         socket.emit('join', {username, room}, () => {
         });
 
+
     }, [ENDPOINT, location.search]);
 
 
@@ -44,17 +45,11 @@ const Lobby = ({location}) => {
     }, []);
 
 
+    //useEffect(() =>{addSession({sessionid: room, topic: 'newTopic'});}); // addsession!!
 
-    //sessionid: , topic: ,
-    useEffect(() => {
-        api.post(`/sessions`, {sessionid: room, topic: 'newTopic'})
-            .then(res => {
-                return res.status;
-            });
-            },[]);
 
     const addCardBtn1 = () => {// Add cars button
-        addSession({sessionid: room, topic: 'newTopic'});
+        //addSession({sessionid: room, topic: 'newTopic'});
         let suggestion = document.getElementById('btn1').value;
         if (!suggestion) {
             alert("Please enter some suggestion!");
