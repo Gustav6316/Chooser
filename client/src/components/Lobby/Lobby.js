@@ -17,6 +17,7 @@ const Lobby = ({location}) => {
     const [users, setUsers] = useState('');
     const [inviteLink, setInviteLink] = useState(`localhost:3000/?room=`);
     const [hasLoaded, setHasLoaded] = useState(false);
+    const [sessionExists, setSessionexists] = useState(false);
     const ENDPOINT = 'http://localhost:4000';
 
     useEffect(() => {
@@ -28,8 +29,8 @@ const Lobby = ({location}) => {
         setUsername(username);
         setRoom(room);
         setInviteLink(`localhost:3000/?room=${room}`);
-
-        addSession({sessionid: room, topic: 'newTopic'});
+        
+        if (!sessionExists) addSession({sessionid: room, topic: 'newTopic'});
 
         socket.emit('join', {username, room}, () => {
         });
