@@ -110,7 +110,7 @@ const Lobby = ({location}) => {
                            placeholder="Write your third Suggestion!"/>
                     <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>
                     <div>
-                         <Link to={`/choosing`}>
+                        <Link to={`/choosing`}>
                             <button className='btnForNextPage' type="submit">Start Choosing</button>
                         </Link>
                     </div>
