@@ -35,7 +35,10 @@ const Choosing = (props) => {
         setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Result.jsx zurückgegeben
     };
     useEffect(() => {
-        api.get(`/cards/${'test'}`)
+        const abortController = new AbortController();
+        const signal = abortController.signal
+
+        api.get(`/cards/${'test'}`, {signal: signal})
             .then(res => {
                     setIsLoaded(true);
                     setFullFilms(res.data);
@@ -44,7 +47,9 @@ const Choosing = (props) => {
                     setIsLoaded(true);
                     setError(error);
                 })
-
+        return function cleanup() {
+            abortController.abort();
+        }
 
     }, [])
 
