@@ -17,6 +17,7 @@ const io = socketio(server, {
     }
 });
 
+const counter = 0;
 
 // Connection Event von Socket.io
 io.on('connection', (socket) => {
@@ -35,6 +36,16 @@ io.on('connection', (socket) => {
         io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });   // Übermitteln der User and den Raum
     });
 
+    socket.on('ready', ({ username, room }, callback) => {
+        if (error) return callback(error);
+        
+        counter + 1;
+        console.log(`${username} ist ready`);
+
+        if (counter === getUsersInRoom.length) {
+            io.to(room).emit('allReady')
+        }
+    })
     // Entfernt User aus dem Raum wenn er diesen verlässt
     socket.on('disconnect', () => {
         removeUser(socket.id);
