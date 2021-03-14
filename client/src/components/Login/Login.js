@@ -8,7 +8,7 @@ import api, {testInterceptor}  from '../api'
 import './Login.css'
 
 
-export default function Login() {
+export default function Login(props) {
     const [username, setUsername] = useState('');
     const [room, setRoom] = useState('');
     const [sessions, setSessions] = useState(null);
@@ -25,6 +25,7 @@ export default function Login() {
 
             const { room } = queryString.parse(window.location.search);
             setRoom(room);
+
         }
       }, []);
 
@@ -43,8 +44,8 @@ export default function Login() {
         }) 
       
       }
-      
 
+    props.setROOM(room);
     return (
     <Container className="align-items-center" style={{width: '100%'}}>
         <Button variant='warning' onClick={testInterceptor}>Testbutton</Button>

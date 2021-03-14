@@ -21,7 +21,7 @@ const Choosing = (props) => {
     let plusPoint = (props1) => {
 
         updateScore({
-            sessionid: 'test',
+            sessionid: props.room,
             subject: fullFilms[count].subject,
             score: props1,
         });
@@ -34,7 +34,7 @@ const Choosing = (props) => {
         setCount(count + 1);       //wird diese F gerufen und sortierte Map in die Result.jsx zurückgegeben
     };
     useEffect(() => {
-        api.get(`/cards/${'test'}`)
+        api.get(`/cards/${props.room}`)
             .then(res => {
                     setIsLoaded(true);
                     setFullFilms(res.data);

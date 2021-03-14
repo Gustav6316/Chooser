@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import queryString from 'query-string';
 import './Lobby.css'
 
-import {addCard} from '../api';
+import api, {addCard, addSession} from '../api';
 import {Link} from "react-router-dom";
 
 
@@ -27,6 +27,7 @@ const Lobby = ({location}) => {
         setUsername(username);
         setRoom(room);
         setInviteLink(`localhost:3000/?room=${room}`)
+
         socket.emit('join', {username, room}, () => {
         });
 
@@ -36,18 +37,30 @@ const Lobby = ({location}) => {
     // Fängt roomData Event ab und übergibt die User and useState();
 
     useEffect(() => {
+
         socket.on('roomData', ({users}) => {
             setUsers(users);
         });
     }, []);
 
+
+
+    //sessionid: , topic: ,
+    useEffect(() => {
+        api.post(`/sessions`, {sessionid: room, topic: 'newTopic'})
+            .then(res => {
+                return res.status;
+            });
+            },[]);
+
     const addCardBtn1 = () => {// Add cars button
+        addSession({sessionid: room, topic: 'newTopic'});
         let suggestion = document.getElementById('btn1').value;
         if (!suggestion) {
             alert("Please enter some suggestion!");
             return;
         }// wenn das Feld leer ist, wird returned
-        addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
+        addCard({subject: suggestion, description: "test desc", sessionid: room});
         // document.getElementById('button1').hidden = true;
         document.getElementById('btn1').value = '';
     }
@@ -57,7 +70,7 @@ const Lobby = ({location}) => {
             alert("Please enter some suggestion!");
             return;
         }// wenn das Feld leer ist, wird returned
-        addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
+        addCard({subject: suggestion, description: "test desc", sessionid: room});
         document.getElementById('button2').hidden = true;
     }
     const addCardBtn3 = () => {// Add cars button
@@ -66,7 +79,8 @@ const Lobby = ({location}) => {
             alert("Please enter some suggestion!");
             return;
         }// wenn das Feld leer ist, wird returned
-        addCard({subject: suggestion, description: "test desc", sessionid: 'test'});
+
+        addCard({subject: suggestion, description: "test desc", sessionid: room});
         // document.getElementById('btn3').value = '';
         document.getElementById('button3').hidden = true;
     }
@@ -110,7 +124,7 @@ const Lobby = ({location}) => {
                            placeholder="Write your third Suggestion!"/>
                     <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>
                     <div>
-                        <Link to={`/choosing`}>
+                         <Link to={`/choosing`}>
                             <button className='btnForNextPage' type="submit">Start Choosing</button>
                         </Link>
                     </div>
