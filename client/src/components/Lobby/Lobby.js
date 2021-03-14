@@ -11,13 +11,12 @@ import Choosing from "../Choosing/Choosing";
 import Rating from "../Rating/Rating";
 
 import api, {getUsers,  getUser, getCards, getLastThreeSessions, addUser, addSession, addCard} from '../api';
-import {Link} from "react-router-dom";
 
 
 
 let socket;
 
-const Lobby = ({ location }) => {
+const Lobby = ({ location, props }) => {
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [users, setUsers] = useState('');
@@ -26,7 +25,7 @@ const Lobby = ({ location }) => {
 
   useEffect(() => {
     const { username, room } = queryString.parse(location.search);
-
+    
 
     socket = io(ENDPOINT, { transports: ['websocket', 'polling', 'flashsocket'] });
 
@@ -88,41 +87,38 @@ const Lobby = ({ location }) => {
        // document.getElementById('btn3').value = '';
         document.getElementById('button3').hidden = true;
     }
-
+let roomTest = 'test';
 //HTML für die Lobby
   return (
     <div>
 
-           <div className="container float-left">
-               <h1 className="align-center">Lobby{room}</h1>
-               <ul className="list-group" id="elementList">
+    {/*       <div className="container float-left">*/}
+    {/*           <h1 className="align-center">Lobby</h1>*/}
+    {/*           <ul className="list-group" id="elementList">*/}
 
-                   <input id='btn1' className="list-group-item" type='text'
-                          placeholder="Write your first Suggestion!"/>
-                   <button id='button1' onClick={addCardBtn1} type="submit">Submit</button>
-                   <input id='btn2' className="list-group-item" type='text'
-                          placeholder="Write your second Suggestion!"/>
-                   <button id='button2' onClick={addCardBtn2}  type="submit">Submit</button>
-                   <input id='btn3' className="list-group-item" type='text'
-                          placeholder="Write your third Suggestion!"/>
-                   <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>
-                   <Link  to={`/choosing`}>
-                       <button className='btnForNextPage' type="submit" >Start Choosing</button>
-                   </Link>
-                </ul>
-               <div className="container float-left">
-                   {(inviteLink===undefined) ? <h5>loading...</h5> : <h8>{inviteLink}</h8>}
-               </div>
-           </div>
+    {/*               <input id='btn1' class="list-group-item" type='text'*/}
+    {/*                      placeholder="Write your first Suggestion!"/>*/}
+    {/*               <button id='button1' onClick={addCardBtn1} type="submit">Submit</button>*/}
+    {/*               <input id='btn2' className="list-group-item" type='text'*/}
+    {/*                      placeholder="Write your second Suggestion!"/>*/}
+    {/*               <button id='button2' onClick={addCardBtn2}  type="submit">Submit</button>*/}
+    {/*               <input id='btn3' className="list-group-item" type='text'*/}
+    {/*                      placeholder="Write your third Suggestion!"/>*/}
+    {/*               <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>*/}
 
-    {<Userlist users={ users }/>}
+    {/*            </ul>*/}
+     {(inviteLink===undefined) ? <h5>loading...</h5> : <h8>{inviteLink}</h8>}
+    {/*       </div>*/}
+    
+    {/*{<Userlist users={ users }/>}*/}
 
+    {/*{<Button variant='warning' onClick={getUserData}>Get User Data now!</Button>}*/}
 
-      {/*{!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen*/}
-      {/*    <Choosing room={roomTest} toTheLobby={toTheLobby}/>*/}
-      {/*) : (*/}
-      {/*    <Rating />*/}
-      {/*)}*/}
+      {!state.joined ? (// das sollte eig in die App.js gehen, aber erst Mal hier zum Testen
+          <Choosing room={roomTest} toTheLobby={toTheLobby}/>
+      ) : (
+          <Rating />
+      )}
     </div>
   )
 };
