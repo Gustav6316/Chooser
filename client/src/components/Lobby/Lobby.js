@@ -106,7 +106,7 @@ const Lobby = ({location}) => {
         alert("Copied the text: " + copyText.value);
     }
 //HTML für die Lobby
-    return ( setHasLoaded ?
+    return ( setHasLoaded ? (
         <div className='main'>
 
             <div className="container float-left">
@@ -142,7 +142,7 @@ const Lobby = ({location}) => {
             </div>
 
 
-        </div> : <h3>Loading...</h3>
+        </div>) : (<h3>Loading...</h3>)
 )
 };
 

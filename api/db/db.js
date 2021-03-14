@@ -64,7 +64,10 @@ const getUsersByID = (req, res) => {
     let id = parseInt(req.params.id);
 
     pool.query('SELECT * FROM public.users WHERE userid=$1', [id], (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
         
         if (results.rowCount === 0) {
             res.status(404).send(`Kein User unter ID:${id} zu finden`)
@@ -120,7 +123,10 @@ const getWinner = (req, res) => {
 const getLastThreeSessions = (req, res) => {
 
     pool.query('SELECT * FROM public.sessions ORDER BY created DESC LIMIT 3', (err, results) => {
-        if (err) throw err; 
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
 
         if (results.rowCount === 0) {
             res.status(404).send(`Could not get last 3 Sessions`);
@@ -141,7 +147,10 @@ const createSession = (req, res) => {
     }
 
     pool.query('INSERT INTO public.sessions(sessionid, topic) VALUES($1, $2)', [req.body.sessionid, req.body.topic], (err, results) => {
-        if (err) throw err;
+        if (err) {
+            console.error(err);
+            res.status(400).send('SQL ERROR');
+        }
 
         res.status(201).send(`Session: ${req.body.sessionid} added successfully`);
     });
