@@ -20,6 +20,7 @@ const Choosing = (props) => {// Durch props wird sessionid uebertragen
                 return res.status;
             });
     }
+
 // Algorithm
     let plusPoint = (props1) => {
 
@@ -31,8 +32,8 @@ const Choosing = (props) => {// Durch props wird sessionid uebertragen
 
         setCount(count + 1);
     };
-
     useEffect(() => {
+
         api.get(`/cards/${props.room}`)// Fragt die Daten aus DB und spreicher in suggestion
             .then(res => {
                     setIsLoaded(true);

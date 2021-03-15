@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
         counter + 1;
         console.log(`${username} ist ready`);
 
-        if (counter === getUsersInRoom.length) {
+        if (counter === getUsersInRoom(room).length) {
             io.to(room).emit('allReady')
         }
     })

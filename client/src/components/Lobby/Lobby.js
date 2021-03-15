@@ -54,29 +54,29 @@ const Lobby = ({location}) => {
 
 
     const addCardBtn1 = () => {// Add cars button
-        //addSession({sessionid: room, topic: 'newTopic'});
+
         let suggestion = document.getElementById('btn1').value;
         if (!suggestion) {
-            alert("Please enter some suggestion!");
+            alert("Please enter first suggestion!");
             return;
         }// wenn das Feld leer ist, wird returned
         addCard({subject: suggestion, description: "test desc", sessionid: room});
-        // document.getElementById('button1').hidden = true;
-        document.getElementById('btn1').value = '';
+         document.getElementById('button1').hidden = true;
     }
     const addCardBtn2 = () => {// Add cars button
         let suggestion = document.getElementById('btn2').value;
         if (!suggestion) {
-            alert("Please enter some suggestion!");
+            alert("Please enter second suggestion!");
             return;
         }// wenn das Feld leer ist, wird returned
         addCard({subject: suggestion, description: "test desc", sessionid: room});
         document.getElementById('button2').hidden = true;
     }
+
     const addCardBtn3 = () => {// Add cars button
         let suggestion = document.getElementById('btn3').value;
         if (!suggestion) {
-            alert("Please enter some suggestion!");
+            alert("Please enter third suggestion!");
             return;
         }// wenn das Feld leer ist, wird returned
 
@@ -92,20 +92,7 @@ const Lobby = ({location}) => {
         Url.select();
         document.execCommand("copy");
     }
-    function myFunction() {
-        /* Get the text field */
-        var copyText = document.getElementById("myInput");
 
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-        /* Copy the text inside the text field */
-        document.execCommand("copy");
-
-        /* Alert the copied text */
-        alert("Copied the text: " + copyText.value);
-    }
 //HTML für die Lobby
     return ( hasLoaded ? (
         <div className='main'>
@@ -124,7 +111,7 @@ const Lobby = ({location}) => {
                            placeholder="Write your third Suggestion!"/>
                     <button id='button3' onClick={addCardBtn3} type="submit">Submit</button>
                     <div>
-                         <Link to={`/choosing`}>
+                         <Link to={{pathname: `/choosing`, socket: socket}}>
                             <button className='btnForNextPage' type="submit">Start Choosing</button>
                         </Link>
                     </div>
@@ -132,9 +119,7 @@ const Lobby = ({location}) => {
 
             </div>
 
-            {/*    {(inviteLink===undefined) ? <h5>loading...</h5> : <h8>{inviteLink}</h8>}*/}
             <div>Current users online: {users.length}</div>
-                        {/* <Userlist users={ users }/> */}
             <div className="container float-left">
                 <button id='btnInvite' type="button" onClick={Copy}>Invite friends</button>
 
