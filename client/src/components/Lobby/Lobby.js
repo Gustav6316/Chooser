@@ -61,8 +61,8 @@ const Lobby = ({location}) => {
             return;
         }// wenn das Feld leer ist, wird returned
         addCard({subject: suggestion, description: "test desc", sessionid: room});
-        // document.getElementById('button1').hidden = true;
-        document.getElementById('btn1').value = '';
+         document.getElementById('button1').hidden = true;
+
     }
     const addCardBtn2 = () => {// Add cars button
         let suggestion = document.getElementById('btn2').value;
